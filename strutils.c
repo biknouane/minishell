@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:01:57 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/03/27 02:17:42 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/03/27 07:56:35 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,11 @@ void	split_env(t_list *env_list, char *str)
 	key_lenght = dilimiter - str;
 	value_lenght = ft_strlen(dilimiter +1);
 	env_list->key = ft_calloc(key_lenght + 1, sizeof(char));
+	if (!env_list->key)
+		return ;
 	env_list->value = ft_calloc(value_lenght + 1, sizeof(char));
+	if (!env_list->value)
+		return ;
 	ft_strncpy(env_list->key, str, key_lenght);
 	ft_strcpy(env_list->value, dilimiter + 1);
 }
@@ -155,6 +159,8 @@ void	make_env_list(t_list **env_list, char **env)
 	while (env[i])
 	{
 		tmp = ft_calloc(1, sizeof(t_list));
+		if (!tmp)
+			return ;
 		split_env(tmp, env[i]);
 		ft_lstadd_back(env_list, tmp);
 		i++;
@@ -166,6 +172,8 @@ void	add_to_env(t_list **env, char *key, char *value)
 	t_list	*tmp;
 
 	tmp = ft_calloc(1, sizeof(t_list));
+	if (!tmp)
+		return ;
 	tmp->key = key;
 	tmp->value = value;
 	ft_lstadd_back(env, tmp);
@@ -229,15 +237,16 @@ void	update_env(t_list **env, char *str)
 	dilimiter = ft_strchr(str, '=');
 	str_lenght = dilimiter - str;
 	key = ft_calloc(str_lenght + 1, sizeof(char));
+	if (!key)
+		return ;
 	ft_strncpy(key, str, str_lenght);
 	tmp = find_env(env, key);
 	if (tmp == NULL)
-	{
-		free(key);
-		return ;
-	}
+		return (free(key));
 	str_lenght = ft_strlen(dilimiter +1);
 	value = ft_calloc(str_lenght + 1, sizeof(char));
+	if (!value)
+		return ;
 	ft_strcpy(value, dilimiter + 1);
 	free(tmp->value);
 	tmp->value = value;
@@ -275,4 +284,81 @@ void	del_env(t_list **env, char *str)
 		return ;
 	prev->next = tmp->next;
 	free_env(tmp);
+}
+
+int	count_node(t_list **env)
+{
+	t_list	*tmp;
+	int		count;
+
+	count = 0;
+	tmp = *env;
+	while (tmp)
+	{
+		count++;
+		tmp = tmp->next;
+	}
+	return (count);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*final_str;
+	char	*temp_pointer;
+	int		s_one_len;
+	int		s_two_len;
+
+	s_one_len = ft_strlen(s1);
+	s_two_len = ft_strlen(s2);
+	final_str = (char *)malloc(s_two_len + s_one_len + 1);
+	if (!final_str)
+		return (NULL);
+	temp_pointer = final_str;
+	while (*s1)
+	{
+		*temp_pointer = *s1;
+		temp_pointer++;
+		s1++;
+	}
+	while (*s2)
+	{
+		*temp_pointer = *s2;
+		temp_pointer++;
+		s2++;
+	}
+	*temp_pointer = '\0';
+	return (final_str);
+}
+
+char	*make_var(t_list *node)
+{
+	char	*str;
+	char	*tmp_one;
+
+	tmp_one = ft_strjoin(node->key, "=");
+	str = ft_strjoin(tmp_one, node->value);
+	free(tmp_one);
+	return (str);
+}
+
+char	**make_env_tab(t_list **env)
+{
+	t_list	*tmp;
+	char	**tab;
+	int		nodes_count;
+	int		i;
+
+	i = 0;
+	tmp = *env;
+	nodes_count = count_node(env);
+	tab = (char **)ft_calloc(nodes_count + 1, sizeof(char *));
+	if (!tab)
+		return (NULL);
+	while (i < nodes_count)
+	{
+		tab[i] = make_var(tmp);
+		tmp = tmp->next;
+		i++;
+	}
+	return (tab);
 }

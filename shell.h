@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/03/27 01:51:38 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/03/27 07:49:53 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_strncpy(char *dest, const char *src, int n);
 void	ft_strcpy(char *dest, const char *src);
 int		ft_strcmp(char *env_var, char *str);
 int		ft_strncmp(char *s1, char *s2, size_t n);
+char	*ft_strjoin(char const *s1, char const *s2);
 void	*ft_calloc(size_t count, size_t size);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 void	split_env(t_list *env_list, char *str);
@@ -46,5 +47,8 @@ void	update_env(t_list **env, char *str);
 void	del_env(t_list **env, char *str);
 void	free_env(t_list	*tmp);
 int		is_there_env(t_list **env_list, char *str);
+char	**make_env_tab(t_list **env);
+int		count_node(t_list **env);
+char	*make_var(t_list *node);
 
 #endif
