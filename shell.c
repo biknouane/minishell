@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/03/27 07:57:08 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/03/28 08:16:24 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	read_input(char **env)
 {
 	char	*input;
 	t_list	*env_list;
-	char	**env_tab;
+	// char	**env_tab;
 
 	env_list = NULL;
 	make_env_list(&env_list, env);
@@ -41,17 +41,13 @@ void	read_input(char **env)
 			continue ;
 		break ;
 	}
-	// env_tab = make_env_tab(&env_list);
-	// printf("HELLLLLL\n");
-	// int	count = count_node(&env_list);
-	// printf("this is count of the nodes: %d\n", count);
-	// int i = 0;
-	// while (env_tab[i])
-	// {
-	// 	printf("%s\n", env_tab[i]);
-	// 	i++;
-	// }
-	// printf("%s", input);
+	ft_export(&env_list, input);
+	t_list *tmp = env_list;
+	while (tmp)
+	{
+		printf("%s=%s\n", tmp->key, tmp->value);
+		tmp = tmp->next;
+	}
 }
 
 int	main(int ac, char **av, char **env)

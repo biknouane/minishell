@@ -6,7 +6,7 @@
 #    By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 19:55:55 by mbiknoua          #+#    #+#              #
-#    Updated: 2024/03/17 20:36:23 by mbiknoua         ###   ########.fr        #
+#    Updated: 2024/03/28 08:12:51 by mbiknoua         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME= minishell
 FLAGS= -Wall -Wextra -Werror -g -fsanitize=address
 
 
-SCRC= shell.c strutils.c
+SCRC= shell.c strutils.c builtins.c
 
 
 OBJ= $(SCRC:.c=.o)

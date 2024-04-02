@@ -6,11 +6,34 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:01:57 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/03/27 07:56:35 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/04/01 22:01:23 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+int	ft_atoi(char *str)
+{
+	int	sign;
+	int	final_num;
+
+	sign = 1;
+	final_num = 0;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if ((*str == '-') || (*str == '+'))
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		final_num = final_num * 10 + (*str - '0');
+		str++;
+	}
+	return (final_num * sign);
+}
 
 int	ft_isspace(char c)
 {
@@ -55,6 +78,26 @@ int	ft_strlen(const char *s)
 	}
 	return (i);
 }
+
+char	*ft_strdup(const char *s1)
+{
+	size_t	str_len;
+	char	*new_str;
+
+	str_len = ft_strlen(s1);
+	new_str = malloc(str_len + 1);
+	if (!new_str)
+		return (NULL);
+	while (*s1)
+	{
+		*new_str = *s1;
+		s1++;
+		new_str++;
+	}
+	*new_str = '\0';
+	return (new_str - str_len);
+}
+
 void	ft_strcpy(char *dest, const char *src)
 {
 	while (*src)
@@ -361,4 +404,20 @@ char	**make_env_tab(t_list **env)
 		i++;
 	}
 	return (tab);
+}
+
+void	print_error(char *str)
+{
+	printf("%s\n", str);
+	exit(1);
+}
+
+int	ft_fork(void)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == -1)
+		print_error("fork");
+	return (pid);
 }
