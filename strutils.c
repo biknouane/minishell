@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:01:57 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/04/01 22:01:23 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/04/08 00:05:41 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -420,4 +420,97 @@ int	ft_fork(void)
 	if (pid == -1)
 		print_error("fork");
 	return (pid);
+}
+
+#include <stdio.h>
+#include <string.h>
+
+// Function to check if a word is present in a string
+int isWordPresent(const char *string, const char *word) {
+    int stringLength = strlen(string);
+    int wordLength = strlen(word);
+
+    for (int i = 0; i <= stringLength - wordLength; i++) {
+        int j;
+
+        // Check if the current substring matches the word
+        for (j = 0; j < wordLength; j++) {
+            if (string[i + j] != word[j])
+                break;
+        }
+
+        // If the inner loop completed without breaking, it means we found the word
+        if (j == wordLength)
+            return 1; // Return true
+    }
+
+    // If the word was not found
+    return 0; // Return false
+}
+
+int main() {
+    const char *string = "This is a sample string";
+    const char *word = "sample";
+
+    // Check if the word is present in the string
+    if (isWordPresent(string, word))
+        printf("The word '%s' is present in the string.\n", word);
+    else
+        printf("The word '%s' is not present in the string.\n", word);
+
+    return 0;
+}
+
+#include <stdio.h>
+
+typedef enum {
+    NORMAL,
+    IN_SINGLE_QUOTE,
+    IN_DOUBLE_QUOTE
+} State;
+
+void parseString(const char *str) {
+    State state = NORMAL;
+
+    for (int i = 0; str[i] != '\0'; i++) {
+        switch (state) {
+            case NORMAL:
+                if (str[i] == '\'') {
+                    state = IN_SINGLE_QUOTE;
+                    printf("Entering single quote mode\n");
+                } else if (str[i] == '"') {
+                    state = IN_DOUBLE_QUOTE;
+                    printf("Entering double quote mode\n");
+                } else if (str[i] != ' ') {
+                    printf("%c", str[i]);
+                }
+                break;
+
+            case IN_SINGLE_QUOTE:
+                if (str[i] == '\'') {
+                    state = NORMAL;
+                    printf("Leaving single quote mode\n");
+                } else {
+                    printf("%c", str[i]);
+                }
+                break;
+
+            case IN_DOUBLE_QUOTE:
+                if (str[i] == '"') {
+                    state = NORMAL;
+                    printf("Leaving double quote mode\n");
+                } else {
+                    printf("%c", str[i]);
+                }
+                break;
+        }
+    }
+
+    printf("\n");
+}
+
+int main() {
+    const char *str = "ls -la > file.txt | echo \"hello ' wold\"";
+    parseString(str);
+    return 0;
 }

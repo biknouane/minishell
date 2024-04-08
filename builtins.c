@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 07:56:10 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/04/01 02:59:29 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/04/06 02:51:02 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,14 @@ void	ft_export(t_list **env, char *str)
 {
 	t_list	*var;
 
-	var = ft_calloc(1, sizeof(t_list));
-	split_env(var, str);
-	ft_lstadd_back(env, var);
+	if (str)
+	{
+		var = ft_calloc(1, sizeof(t_list));
+		split_env(var, str);
+		ft_lstadd_back(env, var);
+	}
+	else
+		//print
 }
 
 void	ft_unset(t_list **env, char *str)
