@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 08:26:25 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/04/04 01:42:01 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/04/30 01:54:52 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,51 +46,67 @@ t_command	*construct_pipe_node(t_command *left_node, t_command *right_node)
 	return ((t_command *) command);
 }
 
-int	get_token(char	**str, char *end_str, char **start_token, char **end_token)
+t_token	get_token(char	**str, char *end_str, char **str_ret, t_state *state)
 {
 	char	*tmp;
-	char	*white_space;
-	char	*symbols;
-	int		ret;
+	char	*next;
+	char	*start_token;
+	char	*end_token;
+	t_token	ret;
 
 	tmp = *str;
-	white_space = "\t\r\n\v";
-	symbols = "<|>";
-	while (tmp < end_str && ft_strchr(white_space, *tmp))
-		tmp++;
-	if (start_token)
-		*start_token = tmp;
+	if (*tmp == '"')
+		*state = IN_DOUBLE_QUOTE;
+	else if (*tmp == '\'')
+		*state = IN_SINGL_QUOTE;
+	else
+		*state = NORMAL;
+	if (*state == NORMAL)
+	{
+		while (tmp < end_str && ft_strchr("\t\r\n\v ", *tmp))
+			tmp++;
+	}
+	if (str_ret)
+		start_token = tmp;
 	ret = *tmp;
-	if (*tmp == '|')
+	if (*tmp == 0)
+		ret = *tmp;
+	else if (*tmp == '|')
+	{
+		ret = PIP;
 		tmp++;
+	}
 	else if (*tmp == '>')
 	{
+		ret = RE_OUT;
 		tmp++;
 		if (*tmp == '>')
 		{
-			ret = '+';
+			ret = APEND;
 			tmp++;
 		}
 	}
 	else if (*tmp == '<')
 	{
+		ret = RE_IN;
 		tmp++;
 		if (*tmp == '<')
 		{
-			ret = '-';
+			ret = H_DOK;
 			tmp++;
 		}
 	}
 	else
 	{
-		ret = 'a';
-		while (tmp < end_str && !ft_strchr(white_space, *tmp) && \
-				!ft_strchr(symbols, *tmp))
-			tmp++;
+		ret = WORD;
+		parse_string(&tmp, state);
 	}
-	if (end_token)
-		*end_token = tmp;
-	while (tmp < end_str && ft_strchr(white_space, *tmp))
+	if (str_ret)
+	{
+		end_token = tmp;
+		*str_ret = ft_substr(start_token, 0, end_token - start_token);
+	}
+	while (tmp < end_str && ft_strchr("\t\r\n\v ", *tmp))
 		tmp++;
 	*str = tmp;
 	return (ret);
@@ -102,10 +118,9 @@ int	look_ahead(char **str, char *end_str, char *tokens)
 	char	*white_space;
 
 	tmp = *str;
-	white_space = "\t\r\n\v";
+	white_space = "\t\r\n\v ";
 	while (tmp < end_str && ft_strchr(white_space, *tmp))
 		tmp++;
 	*str = tmp;
 	return (*tmp && ft_strchr(tokens, *tmp));
 }
-// parse_pipe ===> parse_redirs ===> parse_exec

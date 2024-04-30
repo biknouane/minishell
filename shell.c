@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/03/28 08:16:24 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:00:03 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,41 @@ int	ft_readline(char **input)
 		exit(1);
 	}
 	if (strcmp(*input, "") == 0 || ft_strisspace(*input))
-		return (1);
+		return (0);
 	if (strlen(*input) > 0)
 		add_history(*input);
-	return (0);
+	return (1);
 }
 
 void	read_input(char **env)
 {
-	char	*input;
-	t_list	*env_list;
+	char		*input;
+	t_command	*tree;
+	t_list		*env_list;
 	// char	**env_tab;
 
 	env_list = NULL;
 	make_env_list(&env_list, env);
-	while (1)
+	while (ft_readline(&input))
 	{
-		if (ft_readline(&input))
-			continue ;
-		break ;
+		// if is a builting
+			// continue ;
+		if (fork() == 0)
+		{
+			tree = parse_cmd(input);
+			expand(tree);
+			run_cmd(tree);
+		}
+		wait(0);
 	}
-	ft_export(&env_list, input);
-	t_list *tmp = env_list;
-	while (tmp)
-	{
-		printf("%s=%s\n", tmp->key, tmp->value);
-		tmp = tmp->next;
-	}
+	exit(0);
+	// ft_export(&env_list, input);
+	// t_list *tmp = env_list;
+	// while (tmp)
+	// {
+	// 	printf("%s=%s\n", tmp->key, tmp->value);
+	// 	tmp = tmp->next;
+	// }
 }
 
 int	main(int ac, char **av, char **env)

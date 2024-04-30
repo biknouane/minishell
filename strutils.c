@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:01:57 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/04/08 00:05:41 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/04/30 01:50:42 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -422,95 +422,104 @@ int	ft_fork(void)
 	return (pid);
 }
 
-#include <stdio.h>
-#include <string.h>
+int	is_word_present(char *str, char *word)
+{
+	int	str_lenght;
+	int	word_lenght;
+	int	i;
+	int	j;
 
-// Function to check if a word is present in a string
-int isWordPresent(const char *string, const char *word) {
-    int stringLength = strlen(string);
-    int wordLength = strlen(word);
-
-    for (int i = 0; i <= stringLength - wordLength; i++) {
-        int j;
-
-        // Check if the current substring matches the word
-        for (j = 0; j < wordLength; j++) {
-            if (string[i + j] != word[j])
-                break;
-        }
-
-        // If the inner loop completed without breaking, it means we found the word
-        if (j == wordLength)
-            return 1; // Return true
-    }
-
-    // If the word was not found
-    return 0; // Return false
+	str_lenght = ft_strlen(str);
+	word_lenght = ft_strlen(word);
+	i = 0;
+	while (i <= str_lenght - word_lenght)
+	{
+		j = 0;
+		while (j < word_lenght)
+		{
+			if (str[i + j] != word[j])
+				break ;
+			j++;
+		}
+		if (j == word_lenght)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-int main() {
-    const char *string = "This is a sample string";
-    const char *word = "sample";
-
-    // Check if the word is present in the string
-    if (isWordPresent(string, word))
-        printf("The word '%s' is present in the string.\n", word);
-    else
-        printf("The word '%s' is not present in the string.\n", word);
-
-    return 0;
+static	void	check_if_len_not_big(char const *s, int *str_len,
+					size_t len, unsigned int start)
+{
+	*str_len = len;
+	if (len > ft_strlen(s))
+		*str_len = ft_strlen(s) - start;
+	if (start >= ft_strlen(s))
+		*str_len = 0;
 }
 
-#include <stdio.h>
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*rtn_str;
+	char	*temp_poi;
+	char	*poi_on_s;
+	int		str_len;
 
-typedef enum {
-    NORMAL,
-    IN_SINGLE_QUOTE,
-    IN_DOUBLE_QUOTE
-} State;
-
-void parseString(const char *str) {
-    State state = NORMAL;
-
-    for (int i = 0; str[i] != '\0'; i++) {
-        switch (state) {
-            case NORMAL:
-                if (str[i] == '\'') {
-                    state = IN_SINGLE_QUOTE;
-                    printf("Entering single quote mode\n");
-                } else if (str[i] == '"') {
-                    state = IN_DOUBLE_QUOTE;
-                    printf("Entering double quote mode\n");
-                } else if (str[i] != ' ') {
-                    printf("%c", str[i]);
-                }
-                break;
-
-            case IN_SINGLE_QUOTE:
-                if (str[i] == '\'') {
-                    state = NORMAL;
-                    printf("Leaving single quote mode\n");
-                } else {
-                    printf("%c", str[i]);
-                }
-                break;
-
-            case IN_DOUBLE_QUOTE:
-                if (str[i] == '"') {
-                    state = NORMAL;
-                    printf("Leaving double quote mode\n");
-                } else {
-                    printf("%c", str[i]);
-                }
-                break;
-        }
-    }
-
-    printf("\n");
+	check_if_len_not_big(s, &str_len, len, start);
+	rtn_str = (char *)malloc(str_len + 1);
+	if (!rtn_str)
+		return (NULL);
+	if (start >= ft_strlen(s))
+	{
+		*rtn_str = '\0';
+		return (rtn_str);
+	}
+	temp_poi = rtn_str;
+	poi_on_s = (char *)(s + start);
+	while (len && *poi_on_s)
+	{
+		*temp_poi = *poi_on_s;
+		temp_poi++;
+		poi_on_s++;
+		len--;
+	}
+	*temp_poi = '\0';
+	return (rtn_str);
 }
 
-int main() {
-    const char *str = "ls -la > file.txt | echo \"hello ' wold\"";
-    parseString(str);
-    return 0;
+void	parse_string(char **str, t_state *state)
+{
+	char	*tmp;
+	int		i;
+
+	tmp = *str;
+	tmp++;
+	while (*tmp)
+	{
+		if (*state == NORMAL)
+		{
+			if (ft_strchr("<|> ", *tmp))
+			{
+				*str = tmp;
+				return ;
+			}
+			else if (*tmp == '\'')
+				*state = IN_SINGL_QUOTE;
+			else if (*tmp == '"')
+				*state = IN_DOUBLE_QUOTE;
+		}
+		else if (*state == IN_SINGL_QUOTE)
+		{
+			if (*tmp == '\'')
+				*state = NORMAL;
+		}
+		else if (*state == IN_DOUBLE_QUOTE)
+		{
+			if (*tmp == '"')
+				*state = NORMAL;
+		}
+		tmp++;
+	}
+	*str = tmp;
 }
+

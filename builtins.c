@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 07:56:10 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/04/06 02:51:02 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/04/29 22:10:55 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_export(t_list **env, char *str)
 		split_env(var, str);
 		ft_lstadd_back(env, var);
 	}
-	else
+	// else
 		//print
 }
 
