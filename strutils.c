@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:01:57 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/01 03:24:18 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/01 23:37:20 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -485,4 +485,88 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	*temp_poi = '\0';
 	return (rtn_str);
+}
+
+static	int	count_words(char const *p, char c)
+{
+	char	*first_temp_pointer;
+	char	*second_temp_pointer;
+	int		counter;
+
+	first_temp_pointer = (char *)p;
+	second_temp_pointer = (char *)p;
+	counter = 0;
+	while (*first_temp_pointer)
+	{
+		second_temp_pointer++;
+		if ((*first_temp_pointer != c && *second_temp_pointer == c)
+			|| (*first_temp_pointer != c && *second_temp_pointer == '\0'))
+			counter++;
+		first_temp_pointer++;
+	}
+	return (counter);
+}
+
+static	void	allocate_word(char const *s, char **first_pointer
+						, char **second_pointer, char c)
+{
+	while (*s && **first_pointer == c)
+	{
+		(*first_pointer)++;
+		(*second_pointer)++;
+	}
+	while (*s && **second_pointer != c && **second_pointer != '\0')
+		(*second_pointer)++;
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**array_of_words;
+	char	*begin_of_word;
+	char	*end_of_word;
+	int		num_of_words;
+	int		i;
+
+	if (s == NULL)
+		return (NULL);
+	i = 0;
+	begin_of_word = (char *)s;
+	end_of_word = (char *)s;
+	num_of_words = count_words(s, c);
+	array_of_words = (char **)ft_calloc(sizeof(char *), num_of_words + 1);
+	if (!array_of_words)
+		return (NULL);
+	while (num_of_words > i)
+	{
+		allocate_word(s, &begin_of_word, &end_of_word, c);
+		array_of_words[i] = ft_substr(s, (int)(begin_of_word - s), \
+				(end_of_word - begin_of_word));
+		end_of_word++;
+		begin_of_word = end_of_word;
+		i++;
+	}
+	return (array_of_words);
+}
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+}
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }

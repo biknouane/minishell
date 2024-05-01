@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/04/30 00:42:47 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/01 23:21:50 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_pipe_cmd
 	struct s_command	*left_node;
 	struct s_command	*right_node;
 }				t_pipe_cmd;
-
+int			string_quotes(char *str);
 void		parse_string(char **str, t_state *state);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 void		print_error(char *str);
@@ -93,7 +93,10 @@ int			ft_strlen(const char *s);
 void		ft_strncpy(char *dest, const char *src, int n);
 void		ft_strcpy(char *dest, const char *src);
 char		*ft_strdup(const char *s1);
+void		ft_putstr_fd(char *s, int fd);
+void		ft_putendl_fd(char *s, int fd);
 int			ft_strcmp(char *env_var, char *str);
+void		ft_putchar_fd(char c, int fd);
 int			ft_strncmp(char *s1, char *s2, size_t n);
 char		*ft_strjoin(char const *s1, char const *s2);
 void		*ft_calloc(size_t count, size_t size);
