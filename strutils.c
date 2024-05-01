@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:01:57 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/04/30 01:50:42 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/01 03:24:18 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -486,40 +486,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	*temp_poi = '\0';
 	return (rtn_str);
 }
-
-void	parse_string(char **str, t_state *state)
-{
-	char	*tmp;
-	int		i;
-
-	tmp = *str;
-	tmp++;
-	while (*tmp)
-	{
-		if (*state == NORMAL)
-		{
-			if (ft_strchr("<|> ", *tmp))
-			{
-				*str = tmp;
-				return ;
-			}
-			else if (*tmp == '\'')
-				*state = IN_SINGL_QUOTE;
-			else if (*tmp == '"')
-				*state = IN_DOUBLE_QUOTE;
-		}
-		else if (*state == IN_SINGL_QUOTE)
-		{
-			if (*tmp == '\'')
-				*state = NORMAL;
-		}
-		else if (*state == IN_DOUBLE_QUOTE)
-		{
-			if (*tmp == '"')
-				*state = NORMAL;
-		}
-		tmp++;
-	}
-	*str = tmp;
-}
-
