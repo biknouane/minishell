@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/01 23:38:47 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/02 21:50:40 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	read_input(char **env)
 	make_env_list(&env_list, env);
 	while (ft_readline(&input))
 	{
-		// if is a builting
-			// continue ;
+		handle_builtin(input);
+		continue ;
 		if (fork() == 0)
 		{
 			env_tab = make_env_tab(env_list);

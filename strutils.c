@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:01:57 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/01 23:37:20 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/04 04:12:49 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,14 +122,14 @@ void	ft_strncpy(char *dest, const char *src, int n)
 	dest[i] = '\0';
 }
 
-int	ft_strcmp(char *env_var, char *str)
+int	ft_strcmp(char *str1, char *str2)
 {
-	while (*env_var)
+	while (*str1)
 	{
-		if (*env_var != *str)
+		if (*str1 != *str2)
 			return (0);
-		env_var++;
-		str++;
+		str1++;
+		str2++;
 	}
 	return (1);
 }
@@ -180,16 +180,21 @@ void	split_env(t_list *env_list, char *str)
 	int		value_lenght;
 
 	dilimiter = ft_strchr(str, '=');
-	key_lenght = dilimiter - str;
-	value_lenght = ft_strlen(dilimiter +1);
+	if (!dilimiter)
+	{
+		key_lenght = ft_strlen(str);
+		key_lenght = 0;
+	}
+	else
+	{
+		key_lenght = dilimiter - str;
+		value_lenght = ft_strlen(dilimiter +1);
+		env_list->value = ft_calloc(value_lenght + 1, sizeof(char));
+		ft_strcpy(env_list->value, dilimiter + 1);
+		env_list->print_with_env = 1;
+	}
 	env_list->key = ft_calloc(key_lenght + 1, sizeof(char));
-	if (!env_list->key)
-		return ;
-	env_list->value = ft_calloc(value_lenght + 1, sizeof(char));
-	if (!env_list->value)
-		return ;
 	ft_strncpy(env_list->key, str, key_lenght);
-	ft_strcpy(env_list->value, dilimiter + 1);
 }
 
 void	make_env_list(t_list **env_list, char **env)

@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/01 23:21:50 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/04 04:22:35 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 typedef struct s_list
 {
+	int				print_with_env;
 	char			*key;
 	char			*value;
 	struct s_list	*next;
@@ -81,6 +82,8 @@ typedef struct s_pipe_cmd
 	struct s_command	*left_node;
 	struct s_command	*right_node;
 }				t_pipe_cmd;
+
+char		*expand_nv_var(char *str, t_list **env_list);
 int			string_quotes(char *str);
 void		parse_string(char **str, t_state *state);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
@@ -113,8 +116,7 @@ char		**make_env_tab(t_list **env);
 int			count_node(t_list **env);
 char		*make_var(t_list *node);
 
-void		ft_export(t_list **env, char *str);
-void		ft_echo(char *str, bool flag);
+int			ft_export(t_list **env, char *str);
 int			ft_fork(void);
 
 t_command	*construct_pipe_node(t_command *left_node, \

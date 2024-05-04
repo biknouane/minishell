@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 21:36:38 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/01 04:04:09 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/02 02:29:10 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,22 +82,19 @@ int	string_quotes(char *str)
 	return (sin_q - doub_q);
 }
 
+// int main() {
+//     char str[1000];
+// 	int error;
+//     printf("Enter a string: ");
+//     fgets(str, sizeof(str), stdin);
 
+//      error = string_quotes(str);
 
-int main() {
-    char str[1000];
-	int error;
-    printf("Enter a string: ");
-    fgets(str, sizeof(str), stdin);
+//     printf("String without quotes: %s\n", str);
+// 	printf("is there an error: %d\n", error);
 
-     error = string_quotes(str);
-
-    printf("String without quotes: %s\n", str);
-	printf("is there an error: %d\n", error);
-
-    return 0;
-}
-
+//     return 0;
+// }
 
 // int	main(void)
 // {

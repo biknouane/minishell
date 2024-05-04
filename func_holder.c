@@ -6,27 +6,15 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 22:10:56 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/01 23:30:25 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/02 21:04:53 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	look_ahead(char **str, char *end_str, char *tokens)
-{
-	char	*tmp;
-	char	*white_space;
-
-	tmp = *str;
-	white_space = "\t\r\n\v";
-	while (tmp < end_str && ft_strchr(white_space, *tmp))
-		tmp++;
-	*str = tmp;
-	return (*tmp && ft_strchr(tokens, *tmp));
-}
-
 // parce_cmd ===> parse_pipe ===> parse_redirs ===> parse_exec
-
+// this function is the part of parsing redirections and her_doc 
+// and building a node for it
 t_command	*parse_redir(t_command *cmd, char **str, char *end_str, char **env_tab)
 {
 	t_token	token;
@@ -57,6 +45,7 @@ t_command	*parse_redir(t_command *cmd, char **str, char *end_str, char **env_tab
 	return (cmd);
 }
 
+// this function is the part of parsing a command and building a node for it
 t_command	*parse_exec(char **str, char *end_str, char **env_tab)
 {
 	t_command	*ret;
@@ -64,7 +53,6 @@ t_command	*parse_exec(char **str, char *end_str, char **env_tab)
 	t_token		token;
 	int			arg_count;
 	char		*arg;
-	char		*end_arg;
 
 	ret = construct_exec_node();
 	exec_cmd = (t_exec_cmd *) ret;
@@ -73,7 +61,7 @@ t_command	*parse_exec(char **str, char *end_str, char **env_tab)
 	// look ahead if ther is a pipe then print a syntax error and exit(pipe at the beginnig)
 	while (!look_ahead(str, end_str, "|"))
 	{
-		token = get_token(str, end_str, arg, end_arg);
+		token = get_token(str, end_str, &arg, NORMAL);
 		if (token == 0) // if it is the end of string the we break from the loop
 			break ;
 		// if (token != WORD) // this is not necessery 
@@ -84,6 +72,7 @@ t_command	*parse_exec(char **str, char *end_str, char **env_tab)
 	return (ret);
 }
 
+// this function is the part of parsing a pipe and building a node for it
 t_command	*parse_pipe(char **str, char *end_str, char **env_tab)
 {
 	t_command	*cmd;
@@ -98,6 +87,7 @@ t_command	*parse_pipe(char **str, char *end_str, char **env_tab)
 	return (cmd);
 }
 
+// this function is the entry of the parsing functionality
 t_command	*parse_cmd(char *str, char **env_tab)
 {
 	char		*end_str;
@@ -113,6 +103,7 @@ t_command	*parse_cmd(char *str, char **env_tab)
 	return (cmd);
 }
 
+// this function is to handle the execution of commands
 void	run_cmd(t_command *tree, char **env_tab)
 {
 	int			p[2];
@@ -171,12 +162,51 @@ void	run_cmd(t_command *tree, char **env_tab)
 	exit(0);
 }
 
-char	*expand_herdoc(char *line)
+char	*expand_her_doc(char *str, t_list **env_list)
 {
-	
+	char	*ptr;
+	char	*end;
+	char	*tmp;
+	t_list	*node;
+	char	hold;
+
+	tmp = NULL;
+	while (*ptr != '\0' && *ptr != '$')
+		ptr++;
+	end = ptr;
+	end++;
+	if (*end != '\n' && *end != '\'' && *end != '"' && *end != ' ' && *end != '\0')
+	{
+		*ptr = '\0';
+		tmp = ft_strjoin(tmp, str);
+		ptr++;
+		end = ptr;
+		while (*end != '\0' && *end != '\'' && *end != '"' && *end != ' ')
+			end++;
+		hold = *end;
+		*end = '\0';
+		node = find_env(env_list, ptr);
+		if (node)
+			tmp = ft_strjoin(tmp, node->value);
+		*end = hold;
+		tmp = ft_strjoin(tmp, end);
+	}
+	else
+		tmp = str;
+	return (tmp);
 }
 
-void	here_doc(char *eof, int fd)
+// this function is to handle the expand of env var in her_doc
+char	*expand_herdoc(char *line, char **env_list)
+{
+	char	*new_herdoc;
+
+	new_herdoc = expand_nv_var(line, env_list);
+	return (new_herdoc);
+}
+
+// this function is to handle reading from stdin and puting the input in a file
+void	here_doc(char *eof, int fd, char **env_list)
 {
 	char	*line;
 	int		quote_num;

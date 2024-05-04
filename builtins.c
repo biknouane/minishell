@@ -6,39 +6,127 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 07:56:10 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/04/29 22:10:55 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/04 06:01:23 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	ft_echo(char *str, bool flag)
+// this function checks if the str is -n or -nnnn....
+static int	is_new_line(char *str)
 {
-	printf("%s", str);
-	if (flag)
-		printf("\n");
+	int	i;
+
+	i = 1;
+	if (str[0] != '-')
+		return (0);
+	while (i < ft_strlen(str))
+	{
+		if (str[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-void	ft_export(t_list **env, char *str)
+// this function prints the args and ignors the first -n 
+// and then prints new line if there is -n at the beginning
+int	print_echo_args(char **args)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	while (args[i] && is_new_line(args[i]))
+	{
+		flag = 1;
+		i++;
+	}
+	while (args[i])
+	{
+		printf("%s", args[i]);
+		i++;
+	}
+	return (flag);
+}
+
+// this is the alternative of execve of builtings
+void	handle_builtin(char	*cmd, char **args)
+{
+	char	*tmp;
+
+	if (ft_strcmp(cmd, "echo"))
+	{
+		if (!print_echo_args(*args[1]))
+			printf("\n");
+	}
+}
+
+// this function is to check if the str contains 
+// any other chars not '_' of nums or alphanumerics
+static int	is_valid_var(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (str[0] == '=')
+		return (0);
+	while (i < ft_strlen(str) && str[i] != '=')
+	{
+		if (str[i] != '_' && !(str[i] <= '9' && str[i] >= '0') && \
+			!(str[i] <= 'Z' && str[i] >= 'A') && \
+			!(str[i] <= 'z' && str[i] >= 'a'))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+// this is a helper function to print export with no args
+static void	handle_print_export(t_list **env)
+{
+	t_list	*var;
+
+	var = *env;
+	while (var)
+	{
+		printf("declare -x %s =\"", var->key);
+		if (var->value)
+			printf("%s", var->value);
+		printf("\"\n");
+		var = var->next;
+	}
+}
+
+// this function handles the export builtin and coudld handle multiple args
+int	ft_export(t_list **env, char *str)
 {
 	t_list	*var;
 
 	if (str)
 	{
-		var = ft_calloc(1, sizeof(t_list));
-		split_env(var, str);
-		ft_lstadd_back(env, var);
+		if (is_valid_var(str))
+		{
+			var = ft_calloc(1, sizeof(t_list));
+			split_env(var, str);
+			ft_lstadd_back(env, var);
+		}
+		// else
+		// print an error and return to minishell
+		// return (-1);
 	}
-	// else
-		//print
+	else
+		handle_print_export(env);
+	return (0);
 }
 
-void	ft_unset(t_list **env, char *str)
+int	ft_unset(t_list **env, char *str)
 {
 	del_env(env, str);
 }
 
-void	ft_env(t_list **env)
+int	ft_env(t_list **env)
 {
 	t_list	*tmp;
 
@@ -50,7 +138,7 @@ void	ft_env(t_list **env)
 	}
 }
 
-void	ft_exit(char *str)
+int	ft_exit(char *str)
 {
 	int	num;
 
@@ -58,7 +146,7 @@ void	ft_exit(char *str)
 	exit(num);
 }
 
-void	ft_chdir(t_list **env_list, char *str)
+int	ft_chdir(t_list **env_list, char *str)
 {
 	t_list	*old;
 	t_list	*now;
@@ -84,7 +172,7 @@ void	ft_chdir(t_list **env_list, char *str)
 	now->value = tmp;
 }
 
-void	ft_pwd(t_list **env_list)
+int	ft_pwd(t_list **env_list)
 {
 	t_list	*tmp;
 
