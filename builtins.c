@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 07:56:10 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/04 06:01:23 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/05 04:55:54 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,46 +99,88 @@ static void	handle_print_export(t_list **env)
 	}
 }
 
+// this function handles printing error of 
+// exprot function if the str is not valid
+static int	handle_export_error(char *str)
+{
+	printf("minishell: export: \'%s\': not a valid identifier\n", \
+						str);
+	return (-1);
+}
+
 // this function handles the export builtin and coudld handle multiple args
-int	ft_export(t_list **env, char *str)
+int	ft_export(t_list **env, char **str)
 {
 	t_list	*var;
+	int		i;
+	int		ret;
 
+	i = 0;
+	ret = 0;
 	if (str)
 	{
-		if (is_valid_var(str))
+		while (str[i])
 		{
-			var = ft_calloc(1, sizeof(t_list));
-			split_env(var, str);
-			ft_lstadd_back(env, var);
+			if (is_valid_var(str[i]))
+			{
+				var = ft_calloc(1, sizeof(t_list));
+				split_env(var, str[i]);
+				ft_lstadd_back(env, var);
+			}
+			else
+				ret = handle_export_error(str[i]);
+			i++;
 		}
-		// else
-		// print an error and return to minishell
-		// return (-1);
 	}
 	else
 		handle_print_export(env);
-	return (0);
+	return (ret);
 }
 
-int	ft_unset(t_list **env, char *str)
+// this function handles the error if the args is not valid
+static int	handle_unset_error(char *str)
 {
-	del_env(env, str);
+	printf("minishell: unset: \'%s\': not a valid identifier\n", \
+						str);
+	return (-1);
 }
 
+// this function handles unset builtin
+int	ft_unset(t_list **env, char **str)
+{
+	int	i;
+	int	ret;
+
+	i = 0;
+	ret = 0;
+	if (str)
+	{
+		while (str[i])
+		{
+			if (is_valid_var(str[i]))
+				del_env(env, str);
+			else
+				ret = handle_unset_error(str[i]);
+			i++;
+		}
+	}
+	return (ret);
+}
+
+// this function handles the print of env vars if they have value
 int	ft_env(t_list **env)
 {
 	t_list	*tmp;
 
 	tmp = *env;
-	while (tmp)
+	while (tmp && tmp->print_with_env)
 	{
 		printf("%s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
 }
 
-int	ft_exit(char *str)
+int	ft_exit(char **str)
 {
 	int	num;
 
