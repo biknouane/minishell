@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/04 04:22:35 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:17:14 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,11 @@ typedef struct s_pipe_cmd
 }				t_pipe_cmd;
 
 char		*expand_nv_var(char *str, t_list **env_list);
-int			string_quotes(char *str);
+int			strip_string_quotes(char *str);
 void		parse_string(char **str, t_state *state);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
-void		print_error(char *str);
 int			ft_atoi(char *str);
-int			ft_isspace(char c);
-int			ft_strisspace(char *line);
+int			ft_str_is_space(char *line);
 char		*ft_strchr(const char *s, int c);
 int			ft_strlen(const char *s);
 void		ft_strncpy(char *dest, const char *src, int n);
@@ -107,23 +105,19 @@ void		ft_lstadd_back(t_list **lst, t_list *new);
 void		split_env(t_list *env_list, char *str);
 void		make_env_list(t_list **env_list, char **env);
 t_list		*find_env(t_list **env_list, char *str);
-void		add_to_env(t_list **env, char *key, char *value);
-void		update_env(t_list **env, char *str);
 void		del_env(t_list **env, char *str);
 void		free_env(t_list	*tmp);
-int			is_there_env(t_list **env_list, char *str);
 char		**make_env_tab(t_list **env);
 int			count_node(t_list **env);
 char		*make_var(t_list *node);
 
 int			ft_export(t_list **env, char *str);
-int			ft_fork(void);
 
 t_command	*construct_pipe_node(t_command *left_node, \
 						t_command *right_node);
 t_command	*construct_redir_node(t_command *sub_node, \
 						char	*file, int mode, int fd);
 t_command	*construct_exec_node(void);
-t_token	get_token(char	**str, char *end_str, char **str_ret, t_state *state);
+t_token		get_token(char	**str, char *end_str, char **str_ret, t_state *state);
 
 #endif

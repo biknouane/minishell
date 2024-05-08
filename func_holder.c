@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 22:10:56 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/02 21:04:53 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:47:30 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,65 +103,7 @@ t_command	*parse_cmd(char *str, char **env_tab)
 	return (cmd);
 }
 
-// this function is to handle the execution of commands
-void	run_cmd(t_command *tree, char **env_tab)
-{
-	int			p[2];
-	t_exec_cmd	*exec_cmd;
-	t_redir_cmd	*redir_cmd;
-	t_pipe_cmd	*pipe_cmd;
-
-	if (!tree)
-		exit(1);
-	if (tree->type == EXEC)
-	{
-		exec_cmd = (t_exec_cmd *) tree;
-		// if (exec_cmd->argv[0] == 0)
-		// 	exit(1);
-		execve(exec_cmd->argv[0], exec_cmd->argv, env_tab);
-		// if execve returns that's mean that it fails and the program is not valid
-		// and exit
-	}
-	else if (tree->type == REDIR)
-	{
-		redir_cmd = (t_redir_cmd *) tree;
-		close(redir_cmd->fd);
-		if (open(redir_cmd->file, redir_cmd->mode) < 0)
-		{
-			// print that the open is faild 
-			// exit()
-		}
-		run_cmd(redir_cmd->cmd, env_tab);
-	}
-	else if (tree->type == PIPE)
-	{
-		pipe_cmd = (t_pipe_cmd *) tree;
-		// if (pipe(p) < 0)
-			// print an errore and exit
-		if (fork() == 0)
-		{
-			close(1);
-			dup(p[1]);
-			close(p[0]);
-			close(p[1]);
-			run_cmd(pipe_cmd->left_node, env_tab);
-		}
-		if (fork() == 0)
-		{
-			close(0);
-			dup(p[0]);
-			close(p[0]);
-			close(p[1]);
-			run_cmd(pipe_cmd->right_node, env_tab);
-		}
-		close(p[0]);
-		close(p[1]);
-		wait(0);
-		wait(0);
-	}
-	exit(0);
-}
-
+// this function handles the expand inside the her_doc body
 char	*expand_her_doc(char *str, t_list **env_list)
 {
 	char	*ptr;
@@ -212,7 +154,7 @@ void	here_doc(char *eof, int fd, char **env_list)
 	int		quote_num;
 
 	// remove quotes from eof
-	quote_num = string_quotes(eof);
+	quote_num = strip_string_quotes(eof);
 	// if quote_num is not 0 then this is a syntax error;
 	while (1)
 	{

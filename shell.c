@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/02 21:50:40 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/07 11:24:10 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_readline(char **input)
 		printf("exit\n");
 		exit(1);
 	}
-	if (strcmp(*input, "") == 0 || ft_strisspace(*input))
+	if (strcmp(*input, "") == 0 || ft_str_is_space(*input))
 		return (0);
 	if (strlen(*input) > 0)
 		add_history(*input);
@@ -33,20 +33,16 @@ void	read_input(char **env)
 	t_command	*tree;
 	t_list		*env_list;
 	char		**env_tab;
+	int			exit_status;
 
+	exit_status = 0;
 	env_list = NULL;
 	make_env_list(&env_list, env);
 	while (ft_readline(&input))
 	{
-		handle_builtin(input);
-		continue ;
-		if (fork() == 0)
-		{
-			env_tab = make_env_tab(env_list);
-			tree = parse_cmd(input, env_tab);
-			run_cmd(tree, env_tab);
-		}
-		wait(0);
+		env_tab = make_env_tab(env_list);
+		tree = parse_cmd(input, env_tab);
+		execute_cmd(tree, env_tab, &exit_status);
 	}
 	exit(0);
 }

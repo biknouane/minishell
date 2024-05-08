@@ -6,12 +6,13 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:36:32 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/01 23:37:00 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:28:40 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
+// this function is for freeing a table of strings
 void	free_table(char **table)
 {
 	int	i;
@@ -27,24 +28,14 @@ void	free_table(char **table)
 	free(table);
 }
 
-int	search_cmd(t_list *node, char **cmd)
+// this is function is for cheking all the path 
+// variable folders and check if the cmd there
+static int	search_in_folders(char **path, char *cmd_path, \
+								char **cmd, char *tmp)
 {
-	char	**path;
-	char	*cmd_path;
-	char	*tmp;
-	char	*ptr;
-	int		i;
+	int	i;
 
-	ptr = *cmd;
-	if (ptr[0] == '/')
-	{
-		if (access(ptr, X_OK) == 0)
-			return (0);
-		return (-1);
-	}
 	i = 0;
-	tmp = ft_strjoin("/", ptr);
-	path = ft_split(node->value, ':');
 	while (path[i])
 	{
 		cmd_path = ft_strjoin(path[i], tmp);
@@ -58,6 +49,26 @@ int	search_cmd(t_list *node, char **cmd)
 		free(path[i]);
 		i++;
 	}
+}
+
+// this function is for searching for the command is path variable
+int	search_cmd(t_list *node, char **cmd)
+{
+	char	**path;
+	char	*cmd_path;
+	char	*tmp;
+	char	*ptr;
+
+	ptr = *cmd;
+	if (ptr[0] == '/')
+	{
+		if (access(ptr, X_OK) == 0)
+			return (0);
+		return (-1);
+	}
+	tmp = ft_strjoin("/", ptr);
+	path = ft_split(node->value, ':');
+	search_in_folders(path, cmd_path, cmd, tmp);
 	free(tmp);
 	free(path);
 	return (-1);
