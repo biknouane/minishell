@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:14:53 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 13:15:05 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/09 02:21:40 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*expand_nv_var(char *str, t_list **env_list)
 	t_list	*node;
 	char	hold;
 
-	tmp = NULL;
+	ptr = str;
 	while (*ptr != '\0' && *ptr != '$')
 		ptr++;
 	*ptr = '\0';

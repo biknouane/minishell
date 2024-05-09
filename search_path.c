@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:36:32 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 13:28:40 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/10 00:12:54 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	free_table(char **table)
 
 // this is function is for cheking all the path 
 // variable folders and check if the cmd there
-static int	search_in_folders(char **path, char *cmd_path, \
-								char **cmd, char *tmp)
+static int	search_in_folders(char **path, char **cmd, char *tmp)
 {
-	int	i;
+	char	*cmd_path;
+	int		i;
 
 	i = 0;
 	while (path[i])
@@ -49,13 +49,13 @@ static int	search_in_folders(char **path, char *cmd_path, \
 		free(path[i]);
 		i++;
 	}
+	return (-1);
 }
 
 // this function is for searching for the command is path variable
 int	search_cmd(t_list *node, char **cmd)
 {
 	char	**path;
-	char	*cmd_path;
 	char	*tmp;
 	char	*ptr;
 
@@ -68,7 +68,7 @@ int	search_cmd(t_list *node, char **cmd)
 	}
 	tmp = ft_strjoin("/", ptr);
 	path = ft_split(node->value, ':');
-	search_in_folders(path, cmd_path, cmd, tmp);
+	search_in_folders(path, cmd, tmp);
 	free(tmp);
 	free(path);
 	return (-1);

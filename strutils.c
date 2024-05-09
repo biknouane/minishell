@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:01:57 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 05:41:04 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/10 00:19:33 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,3 @@ int	is_word_present(char *str, char *word)
 	}
 	return (0);
 }
-
-
-

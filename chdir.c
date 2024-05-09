@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:34:49 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 04:35:06 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/09 23:20:14 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ int	ft_chdir(t_list **env_list, char **str)
 		tmp = ft_strdup(str[0]);
 	if (chdir(tmp))
 	{
-		printf("Minishell: %s", str);
+		printf("Minishell: %s", *str);
 		perror("");
-		return ;
+		return (-1);
 	}
 	now = find_env(env_list, "PWD");
 	old = find_env(env_list, "OLDPWD");
 	free(old->value);
 	old->value = now->value;
 	now->value = tmp;
+	return (0);
 }

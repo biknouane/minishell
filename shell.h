@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 13:17:14 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/10 00:10:21 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,12 @@ typedef struct s_exec_cmd
 {
 	t_cmd	type;
 	char	*argv[100];
-	// char	*end_argv[20];
 }				t_exec_cmd;
 
 typedef struct s_redir_cmd
 {
 	t_cmd				type;
 	char				*file;
-	char				*end_file;
 	int					mode;
 	int					fd;
 	struct s_command	*cmd;
@@ -83,10 +81,20 @@ typedef struct s_pipe_cmd
 	struct s_command	*right_node;
 }				t_pipe_cmd;
 
+typedef struct s_param_holder
+{
+	char	*input;
+	char	*end_str;
+	t_list	*env_list;
+	t_state	*state;
+	int		exit_status;
+}				t_param_holder;
+
 char		*expand_nv_var(char *str, t_list **env_list);
-int			strip_string_quotes(char *str);
-void		parse_string(char **str, t_state *state);
+int			strip_string_quotes(char *str, int *single_q_n, int *double_q_n);
+void		parse_string(t_param_holder *params);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
+char		**ft_split(char const *s, char c);
 int			ft_atoi(char *str);
 int			ft_str_is_space(char *line);
 char		*ft_strchr(const char *s, int c);
@@ -108,16 +116,29 @@ t_list		*find_env(t_list **env_list, char *str);
 void		del_env(t_list **env, char *str);
 void		free_env(t_list	*tmp);
 char		**make_env_tab(t_list **env);
-int			count_node(t_list **env);
-char		*make_var(t_list *node);
 
-int			ft_export(t_list **env, char *str);
+int			ft_export(t_list **env, char **str);
 
 t_command	*construct_pipe_node(t_command *left_node, \
 						t_command *right_node);
 t_command	*construct_redir_node(t_command *sub_node, \
 						char	*file, int mode, int fd);
 t_command	*construct_exec_node(void);
-t_token		get_token(char	**str, char *end_str, char **str_ret, t_state *state);
+t_token		get_token(t_param_holder *params, char **str_ret);
+int			print_error(char *error);
+void		free_tree(t_command *tree);
 
+// this is the part for the parsing
+t_command	*parse_pipe(t_param_holder *params);
+t_command	*parse_exec(t_param_holder *params);
+t_command	*parse_redir(t_command *cmd, t_param_holder *params);
+t_command	*parse_cmd(t_param_holder *params);
+int			look_ahead(t_param_holder *params, char *tokens);
+
+// this is the part for here_doc function
+char		*expand_her_doc(char *str, t_list **env_list);
+int			her_doc(char *eof, int fd, t_list *env_list);
+
+// this is the part for the execution
+void		execute_cmd(t_command *tree, char **env_tab, int *exit_status);
 #endif

@@ -6,100 +6,98 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:29:56 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 10:42:11 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/09 23:56:50 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 // this function is to initialise the state variable
-static void	initialise_state(t_state *state, char tmp)
+static void	initialise_state(t_param_holder *params, char tmp)
 {
 	if (tmp == '"')
-		*state = IN_DOUBLE_QUOTE;
+		*(params->state) = IN_DOUBLE_QUOTE;
 	else if (tmp == '\'')
-		*state = IN_SINGL_QUOTE;
+		*(params->state) = IN_SINGL_QUOTE;
 	else
-		*state = NORMAL;
+		*(params->state) = NORMAL;
 }
 
 // this function is to set the return token to a redirection or word
-static void	handle_redirs(t_token *ret, char **tmp, t_state *state)
+static void	handle_redirs(t_token *ret, t_param_holder *params)
 {
-	if (*tmp == '>')
+	if (*(params->input) == '>')
 	{
-		ret = RE_OUT;
-		tmp++;
-		if (*tmp == '>')
+		*ret = RE_OUT;
+		(params->input)++;
+		if (*(params->input) == '>')
 		{
-			ret = APEND;
-			tmp++;
+			*ret = APEND;
+			(params->input)++;
 		}
 	}
-	else if (*tmp == '<')
+	else if (*(params->input) == '<')
 	{
-		ret = RE_IN;
-		tmp++;
-		if (*tmp == '<')
+		*ret = RE_IN;
+		(params->input)++;
+		if (*(params->input) == '<')
 		{
-			ret = H_DOK;
-			tmp++;
+			*ret = H_DOK;
+			(params->input)++;
 		}
 	}
 	else
 	{
-		ret = WORD;
-		parse_string(&tmp, state);
+		*ret = WORD;
+		parse_string(params);
 	}
 }
 
 // this function is for setting the return token to a pipe or null
-static void	set_ret_token(t_token *ret, char **tmp, t_state *state)
+static void	set_ret_token(t_token *ret, t_param_holder *params)
 {
-	if (*tmp == 0)
-		ret = *tmp;
-	else if (*tmp == '|')
+	if (*(params->input) == 0)
+		*ret = *(params->input);
+	else if (*(params->input) == '|')
 	{
-		ret = PIP;
-		tmp++;
+		*ret = PIP;
+		(params->input)++;
 	}
 	else
-		handle_redirs(ret, tmp, state);
+		handle_redirs(ret, params);
 }
 
 // this function is tho escape the leading space
-static void	escape_leading_space(t_state *state, char *end_str, char **tmp)
+static void	escape_leading_space(t_param_holder *params)
 {
-	if (*state == NORMAL)
+	if (params->state == NORMAL)
 	{
-		while (*tmp < end_str && ft_strchr("\t\r\n\v ", **tmp))
-			(*tmp)++;
+		while (params->input < params->end_str && \
+				ft_strchr("\t\r\n\v ", *(params->input)))
+			(params->input)++;
 	}
 }
 
 // this function is the tokenizer and get us the next token
-t_token	get_token(char	**str, char *end_str, char **str_ret, t_state *state)
+t_token	get_token(t_param_holder *params, char **str_ret)
 {
-	char	*tmp;
-	char	*next;
 	char	*start_token;
 	char	*end_token;
 	t_token	ret;
 
-	tmp = *str;
-	initialise_state(state, *tmp);
-	escape_leading_space(state, end_str, &tmp);
+	initialise_state(params, *(params->input));
+	escape_leading_space(params);
 	if (str_ret)
-		start_token = tmp;
-	ret = *tmp;
-	set_ret_token(&ret, &tmp, state);
+		start_token = params->input;
+	ret = *(params->input);
+	set_ret_token(&ret, params);
 	if (str_ret)
 	{
-		end_token = tmp;
+		end_token = params->input;
 		*str_ret = ft_substr(start_token, 0, end_token - start_token);
 	}
-	while (tmp < end_str && ft_strchr("\t\r\n\v ", *tmp))
-		tmp++;
-	*str = tmp;
+	while ((params->input) < params->end_str && \
+		ft_strchr("\t\r\n\v ", *(params->input)))
+		(params->input)++;
 	return (ret);
 }

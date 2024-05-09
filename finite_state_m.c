@@ -6,51 +6,44 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:00:42 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 10:42:36 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:23:04 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 // this function is for handling the quote state
-static void	handle_quote_state(t_state *state, char tmp)
+static void	handle_quote_state(t_param_holder *params)
 {
-	if (*state == IN_SINGL_QUOTE)
+	if (*(params->state) == IN_SINGL_QUOTE)
 	{
-		if (tmp == '\'')
-			*state = NORMAL;
+		if (*(params->input) == '\'')
+			*(params->state) = NORMAL;
 	}
-	else if (*state == IN_DOUBLE_QUOTE)
+	else if (*(params->state) == IN_DOUBLE_QUOTE)
 	{
-		if (tmp == '"')
-			*state = NORMAL;
+		if (*(params->input) == '"')
+			*(params->state) = NORMAL;
 	}
 }
 
 // this function is for changing the state of the tokenizer
-void	parse_string(char **str, t_state *state)
+void	parse_string(t_param_holder *params)
 {
-	char	*tmp;
-
-	tmp = *str;
-	tmp++;
-	while (*tmp)
+	(params->input)++;
+	while (*(params->input))
 	{
-		if (*state == NORMAL)
+		if (*(params->state) == NORMAL)
 		{
-			if (ft_strchr("<|> ", *tmp))
-			{
-				*str = tmp;
+			if (ft_strchr("<|> ", *(params->input)))
 				return ;
-			}
-			else if (*tmp == '\'')
-				*state = IN_SINGL_QUOTE;
-			else if (*tmp == '"')
-				*state = IN_DOUBLE_QUOTE;
+			else if (*(params->input) == '\'')
+				*(params->state) = IN_SINGL_QUOTE;
+			else if (*(params->input) == '"')
+				*(params->state) = IN_DOUBLE_QUOTE;
 		}
 		else
-			handle_quote_state(state, *tmp);
-		tmp++;
+			handle_quote_state(params);
+		(params->input)++;
 	}
-	*str = tmp;
 }

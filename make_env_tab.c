@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:12:23 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 05:12:46 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/10 00:21:00 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static int	count_node(t_list **env)
 	}
 	return (count);
 }
-
 
 static char	*make_var(t_list *node)
 {

@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:17:48 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 15:12:28 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:26:35 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	handle_striping_double_quote(char *str, t_strip_quotes *tmp)
 
 //this is for striping the quotes from the string
 //and this need to be passed allocated
-int	strip_string_quotes(char *str)
+int	strip_string_quotes(char *str, int *single_q_n, int *double_q_n)
 {
 	t_strip_quotes	tmp;
 
@@ -61,5 +61,9 @@ int	strip_string_quotes(char *str)
 		tmp.i++;
 	}
 	str[tmp.j] = '\0';
+	if (single_q_n)
+		*single_q_n = tmp.sin_q;
+	if (double_q_n)
+		*double_q_n = tmp.doub_q;
 	return (tmp.sin_q - tmp.doub_q);
 }

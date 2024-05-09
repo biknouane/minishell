@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:28:41 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 04:29:18 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/09 23:49:12 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	ft_exit(char **str, int exit_status)
 	{
 		printf("minishell: exit: too many arguments\n");
 		exit_status = 1;
+		return (-1);
 	}
 	else if (str[0] != '\0' && str[1] == '\0')
 		exit(ft_atoi(str[0]));
-	else
-		exit(0);
+	exit(0);
 }

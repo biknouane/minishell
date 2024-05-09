@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:46:22 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 12:31:38 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/09 23:42:20 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	execute_redir_node(t_command *tree, char **env_tab, \
 
 // this function is for handling the execution of pipes
 static void	execute_pipe_node(t_command *tree, char **env_tab, \
-								int *exit_status, int *p[])
+								int *exit_status, int *p)
 {
 	t_pipe_cmd	*pipe_cmd;
 
@@ -84,6 +84,6 @@ void	execute_cmd(t_command *tree, char **env_tab, int *exit_status)
 	else if (tree->type == REDIR)
 		execute_redir_node(tree, env_tab, exit_status);
 	else if (tree->type == PIPE)
-		execute_pipe_node(tree, env_tab, exit_status, &p);
+		execute_pipe_node(tree, env_tab, exit_status, p);
 	// exit(0);
 }

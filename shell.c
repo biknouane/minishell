@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 11:24:10 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/10 00:14:55 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,28 @@ int	ft_readline(char **input)
 		printf("exit\n");
 		exit(1);
 	}
-	if (strcmp(*input, "") == 0 || ft_str_is_space(*input))
+	if (ft_strcmp(*input, "") == 0 || ft_str_is_space(*input))
 		return (0);
-	if (strlen(*input) > 0)
+	if (ft_strlen(*input) > 0)
 		add_history(*input);
 	return (1);
 }
 
 void	read_input(char **env)
 {
-	char		*input;
-	t_command	*tree;
-	t_list		*env_list;
-	char		**env_tab;
-	int			exit_status;
+	t_param_holder	params;
+	t_command		*tree;
+	char			**env_tab;
 
-	exit_status = 0;
-	env_list = NULL;
-	make_env_list(&env_list, env);
-	while (ft_readline(&input))
+	params.exit_status = 0;
+	params.env_list = NULL;
+	*(params.state) = NORMAL;
+	make_env_list(&(params.env_list), env);
+	while (ft_readline(&(params.input)))
 	{
-		env_tab = make_env_tab(env_list);
-		tree = parse_cmd(input, env_tab);
-		execute_cmd(tree, env_tab, &exit_status);
+		tree = parse_cmd(&params);
+		env_tab = make_env_tab(&(params.env_list));
+		execute_cmd(tree, env_tab, &(params.exit_status));
 	}
 	exit(0);
 }

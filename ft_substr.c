@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:09:24 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 05:09:46 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/09 23:54:02 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static	void	check_if_len_not_big(char const *s, int *str_len,
 					size_t len, unsigned int start)
 {
 	*str_len = len;
-	if (len > ft_strlen(s))
+	if ((int)len > ft_strlen(s))
 		*str_len = ft_strlen(s) - start;
-	if (start >= ft_strlen(s))
+	if (start >= (unsigned int)ft_strlen(s))
 		*str_len = 0;
 }
 
@@ -33,7 +33,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	rtn_str = (char *)malloc(str_len + 1);
 	if (!rtn_str)
 		return (NULL);
-	if (start >= ft_strlen(s))
+	if (start >= (unsigned int)ft_strlen(s))
 	{
 		*rtn_str = '\0';
 		return (rtn_str);
