@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_is_space.c                                     :+:      :+:    :+:   */
+/*   see_ahead.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/07 05:38:23 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/10 11:29:23 by mbiknoua         ###   ########.fr       */
+/*   Created: 2024/05/10 13:44:17 by mbiknoua          #+#    #+#             */
+/*   Updated: 2024/05/10 13:44:37 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int	ft_is_space(char c)
+int	see_ahead(char *str, char *tokens)
 {
-	if (c == ' ' || c == '\t' || c == '\v' || c == '\r' || c == '\n')
-		return (1);
-	return (0);
-}
-
-int	ft_str_is_space(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-		if (!ft_is_space(line[i++]))
-			return (0);
-	return (1);
+	while (str < (str + ft_strlen(str)) && ft_strchr("\t\r\n\v ", *str))
+		str++;
+	return (*str && ft_strchr(tokens, *str));
 }

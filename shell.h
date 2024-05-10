@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/10 00:10:21 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:04:45 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_command
 typedef struct s_exec_cmd
 {
 	t_cmd	type;
-	char	*argv[100];
+	char	**argv;
 }				t_exec_cmd;
 
 typedef struct s_redir_cmd
@@ -83,11 +83,12 @@ typedef struct s_pipe_cmd
 
 typedef struct s_param_holder
 {
-	char	*input;
-	char	*end_str;
-	t_list	*env_list;
-	t_state	*state;
-	int		exit_status;
+	char		*input;
+	char		*end_str;
+	t_list		*env_list;
+	t_state		state;
+	int			is_error;
+	int			exit_status;
 }				t_param_holder;
 
 char		*expand_nv_var(char *str, t_list **env_list);
@@ -134,6 +135,7 @@ t_command	*parse_exec(t_param_holder *params);
 t_command	*parse_redir(t_command *cmd, t_param_holder *params);
 t_command	*parse_cmd(t_param_holder *params);
 int			look_ahead(t_param_holder *params, char *tokens);
+int			see_ahead(char *str, char *tokens);
 
 // this is the part for here_doc function
 char		*expand_her_doc(char *str, t_list **env_list);

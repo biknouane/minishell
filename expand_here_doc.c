@@ -56,17 +56,22 @@ char	*expand_her_doc(char *str, t_list **env_list)
 
 	ptr = str;
 	find_dollar(&ptr);
-	end = ptr + 1;
-	if (*end != '\n' && *end != '\'' && *end != '"' && \
-				*end != ' ' && *end != '\0')
+	if (*ptr != '\0')
 	{
-		*ptr = '\0';
-		tmp = ft_strjoin(tmp, str);
-		find_here_dilem(&end);
-		hold = *end;
-		*end = '\0';
-		node = find_env(env_list, ptr);
-		replace_var(node, &tmp, end, hold);
+		end = ptr + 1;
+		if (end && *end != '\n' && *end != '\'' && *end != '"' && \
+					*end != ' ' && *end != '\0')
+		{
+			*ptr = '\0';
+			tmp = ft_strjoin(tmp, str);
+			find_here_dilem(&end);
+			hold = *end;
+			*end = '\0';
+			node = find_env(env_list, ptr);
+			replace_var(node, &tmp, end, hold);
+		}
+		else
+			tmp = ft_strdup(str);
 	}
 	else
 		tmp = ft_strdup(str);

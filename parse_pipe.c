@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:51:18 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/09 13:30:27 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/11 00:29:56 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,24 @@ t_command	*parse_pipe(t_param_holder *params)
 	t_command	*cmd;
 
 	cmd = parse_exec(params);
+	printf("returned from the exec parser to pipe parser\n");
+	if (params->is_error)
+		return (cmd);
 	if (look_ahead(params, "|"))
 	{
+		printf("i found the pipe\n");
 		get_token(params, 0);
+		printf("-----am i here %d\n", *(params->input));
+		if (*(params->input) == 0)
+		{
+			print_error("syntax error: you can't have a pipe at the end");
+			return (cmd);
+		}
+		else if (see_ahead(params->input, "|"))
+		{
+			print_error("syntax error: you can't have two pipes");
+			return (cmd);
+		}
 		// check if there is no string and 
 		//print syntax error and exit(pipe at the end);
 		cmd = construct_pipe_node(cmd, parse_pipe(params));

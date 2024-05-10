@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 02:33:13 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/09 21:32:16 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/10 22:37:50 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	her_doc(char *eof, int fd, t_list *env_list)
 	int		double_quote_num;
 
 	quote_num = strip_string_quotes(eof, &single_quote_num, &double_quote_num);
-	if (quote_num)
+	if (quote_num % 2)
 	{
 		print_error("syntax error you need to close quotes");
 		return (-1);
@@ -37,10 +37,14 @@ int	her_doc(char *eof, int fd, t_list *env_list)
 		if (line == NULL)
 			break ;
 		if (ft_strcmp(line, eof))
+		{
+			free(line);
 			break ;
+		}
 		if (single_quote_num == 0 && double_quote_num == 0)
 			line = expand_her_doc(line, &env_list);
 		ft_putendl_fd(line, fd);
+		free(line);
 	}
 	return (0);
 }

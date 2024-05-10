@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:29:56 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/09 23:56:50 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/11 00:13:56 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 static void	initialise_state(t_param_holder *params, char tmp)
 {
 	if (tmp == '"')
-		*(params->state) = IN_DOUBLE_QUOTE;
+		params->state = IN_DOUBLE_QUOTE;
 	else if (tmp == '\'')
-		*(params->state) = IN_SINGL_QUOTE;
+		params->state = IN_SINGL_QUOTE;
 	else
-		*(params->state) = NORMAL;
+		params->state = NORMAL;
 }
 
 // this function is to set the return token to a redirection or word
@@ -83,8 +83,15 @@ t_token	get_token(t_param_holder *params, char **str_ret)
 {
 	char	*start_token;
 	char	*end_token;
+	char	*tmp;
 	t_token	ret;
 
+	ret = 0;
+	if (params->input == params->end_str)
+	{
+		printf(" we ar at the end of the input\n");
+		return (ret);
+	}
 	initialise_state(params, *(params->input));
 	escape_leading_space(params);
 	if (str_ret)
@@ -93,11 +100,17 @@ t_token	get_token(t_param_holder *params, char **str_ret)
 	set_ret_token(&ret, params);
 	if (str_ret)
 	{
+		printf("i ma at returning in the get_token\n");
 		end_token = params->input;
-		*str_ret = ft_substr(start_token, 0, end_token - start_token);
+		tmp = ft_substr(start_token, 0, end_token - start_token);
+		printf("++++++%s\n", tmp);
+		free(*str_ret);
+		*str_ret = NULL;
+		*str_ret = tmp;
 	}
 	while ((params->input) < params->end_str && \
 		ft_strchr("\t\r\n\v ", *(params->input)))
 		(params->input)++;
+	printf("i am about to return aout of get_token\n");
 	return (ret);
 }
