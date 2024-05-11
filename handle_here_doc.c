@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 02:33:13 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/10 22:37:50 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:08:53 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,9 @@ int	her_doc(char *eof, int fd, t_list *env_list)
 	while (1)
 	{
 		line = readline("> ");
-		if (line == NULL)
-			break ;
 		if (ft_strcmp(line, eof))
 		{
+			printf("exiting heredoc %s\n", eof);
 			free(line);
 			break ;
 		}

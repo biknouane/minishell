@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:49:59 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/10 23:00:06 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:47:32 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 			{
 				print_error("syntax error eof missing");
 				params->is_error = 1;
+				free(eof);
+				free(file);
 				return (cmd);
 			}
 			fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0640);

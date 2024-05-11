@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:51:18 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/11 00:29:56 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:42:56 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,22 @@
 t_command	*parse_pipe(t_param_holder *params)
 {
 	t_command	*cmd;
+	t_exec_cmd	*tmp;
 
 	cmd = parse_exec(params);
 	printf("returned from the exec parser to pipe parser\n");
 	if (params->is_error)
 		return (cmd);
+	if (cmd->type == EXEC)
+	{
+		tmp = (t_exec_cmd *) cmd;
+		if (tmp->argv[0] == NULL)
+		{
+			print_error("syntax error: you cant begain with a pipe");
+			params->is_error = 1;
+			return (cmd);
+		}
+	}
 	if (look_ahead(params, "|"))
 	{
 		printf("i found the pipe\n");

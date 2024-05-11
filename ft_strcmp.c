@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:16:41 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 05:17:06 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:08:24 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_strcmp(char *str1, char *str2)
 {
+	if (!*str1 || !*str2)
+		return (0);
 	while (*str1)
 	{
 		if (*str1 != *str2)
