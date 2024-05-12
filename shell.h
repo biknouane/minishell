@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/10 17:04:45 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/11 23:41:17 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@
 # include <stdbool.h>
 # include "readline/readline.h"
 # include "readline/history.h"
+
+// this struct is tmp struct to hold some values 
+// for the strip_string_quotes function
+typedef struct s_strip_quotes
+{
+	int	i;
+	int	j;
+	int	sin_q;
+	int	doub_q;
+}				t_strip_quotes;
 
 typedef struct s_list
 {

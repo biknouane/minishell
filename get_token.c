@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:29:56 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/11 00:13:56 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 11:09:33 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_token	get_token(t_param_holder *params, char **str_ret)
 	ret = 0;
 	if (params->input == params->end_str)
 	{
-		printf(" we ar at the end of the input\n");
+		// printf(" we ar at the end of the input\n");
 		return (ret);
 	}
 	initialise_state(params, *(params->input));
@@ -100,7 +100,7 @@ t_token	get_token(t_param_holder *params, char **str_ret)
 	set_ret_token(&ret, params);
 	if (str_ret)
 	{
-		printf("i ma at returning in the get_token\n");
+		// printf("i ma at returning in the get_token\n");
 		end_token = params->input;
 		tmp = ft_substr(start_token, 0, end_token - start_token);
 		printf("++++++%s\n", tmp);
@@ -111,6 +111,6 @@ t_token	get_token(t_param_holder *params, char **str_ret)
 	while ((params->input) < params->end_str && \
 		ft_strchr("\t\r\n\v ", *(params->input)))
 		(params->input)++;
-	printf("i am about to return aout of get_token\n");
+	// printf("i am about to return aout of get_token\n");
 	return (ret);
 }

@@ -64,6 +64,7 @@ char	*expand_her_doc(char *str, t_list **env_list)
 		{
 			*ptr = '\0';
 			tmp = ft_strjoin(tmp, str);
+			printf("this is the value of the env: \n");
 			find_here_dilem(&end);
 			hold = *end;
 			*end = '\0';
@@ -75,5 +76,7 @@ char	*expand_her_doc(char *str, t_list **env_list)
 	}
 	else
 		tmp = ft_strdup(str);
-	return (free(str), tmp);
+	if (str)
+		free(str);
+	return (tmp);
 }

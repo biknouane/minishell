@@ -6,21 +6,11 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:17:48 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/09 16:26:35 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 12:14:31 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-// this struct is tmp struct to hold some values 
-// for the strip_string_quotes function
-typedef struct s_strip_quotes
-{
-	int	i;
-	int	j;
-	int	sin_q;
-	int	doub_q;
-}				t_strip_quotes;
 
 // this function is for handling the striping for single quotes
 static void	handle_striping_single_quote(char *str, t_strip_quotes *tmp)

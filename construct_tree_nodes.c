@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:43:57 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/10 23:57:59 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 11:08:51 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_command	*construct_exec_node(void)
 {
 	t_exec_cmd	*command;
 
-	printf("i am constructing the exec node\n");
+	// printf("i am constructing the exec node\n");
 	command = ft_calloc(1, sizeof(t_exec_cmd));
 	command->argv = ft_calloc(100, sizeof(char *));
 	command->type = EXEC;
@@ -30,7 +30,7 @@ t_command	*construct_redir_node(t_command *sub_node, \
 {
 	t_redir_cmd	*command;
 
-	printf("i am construction the redir node\n");
+	// printf("i am construction the redir node\n");
 	command = ft_calloc(1, sizeof(t_redir_cmd));
 	command->type = REDIR;
 	command->file = file;

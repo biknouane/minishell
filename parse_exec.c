@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:50:40 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/11 00:33:37 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 11:07:11 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ t_command	*parse_exec(t_param_holder *params)
 	// 	params->is_error = 1;
 	// 	return (ret);
 	// }
-	printf("args ::: %s\n", params->input);
+	// printf("args ::: %s\n", params->input);
 	// look ahead if ther is a pipe then print a syntax error and exit(pipe at the beginnig)
 	while (!look_ahead(params, "|"))
 	{
 		token = get_token(params, &arg);
-		printf("args ::: %s\n", arg);
+		// printf("args ::: %s\n", arg);
 		if (token == 0) // if it is the end of string the we break from the loop
 		{
 			free(arg);
@@ -60,7 +60,7 @@ t_command	*parse_exec(t_param_holder *params)
 		// if (token != WORD) // this is not necessery 
 			//panic syntax error
 		exec_cmd->argv[arg_count] = arg;
-		printf("^[%d]^^^^%s\n",arg_count , exec_cmd->argv[arg_count]);
+		// printf("^[%d]^^^^%s\n",arg_count , exec_cmd->argv[arg_count]);
 		arg_count++;
 		arg = NULL;
 		ret = parse_redir(ret, params);

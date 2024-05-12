@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:51:18 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/11 15:42:56 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 11:07:51 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_command	*parse_pipe(t_param_holder *params)
 	t_exec_cmd	*tmp;
 
 	cmd = parse_exec(params);
-	printf("returned from the exec parser to pipe parser\n");
+	// printf("returned from the exec parser to pipe parser\n");
 	if (params->is_error)
 		return (cmd);
 	if (cmd->type == EXEC)
@@ -36,9 +36,9 @@ t_command	*parse_pipe(t_param_holder *params)
 	}
 	if (look_ahead(params, "|"))
 	{
-		printf("i found the pipe\n");
+		// printf("i found the pipe\n");
 		get_token(params, 0);
-		printf("-----am i here %d\n", *(params->input));
+		// printf("-----am i here %d\n", *(params->input));
 		if (*(params->input) == 0)
 		{
 			print_error("syntax error: you can't have a pipe at the end");

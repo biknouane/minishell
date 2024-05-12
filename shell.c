@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/10 23:22:07 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 11:12:14 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ void	read_input(char **env)
 		tree = parse_cmd(params);
 		if (params->is_error)
 		{
-			printf("i am a bout to fee the tree\n");
+			// printf("i am a bout to fee the tree\n");
 			params->is_error = 0;
 			free_tree(tree);
 			free(tmp);
 			tmp = NULL;
-			system("leaks minishell");
+			// system("leaks minishell");
 			continue ;
 		}
 		// printf("===> %s\n", );
@@ -65,10 +65,10 @@ void	read_input(char **env)
 		// free
 		// if (params->input)
 		// printf("before ....\n");
-		printf("this is the size of tree %lu\n", sizeof(tree));
+		// printf("this is the size of tree %lu\n", sizeof(tree));
 		free_tree(tree);
 		free(tmp);
-		system("leaks minishell");
+		// system("leaks minishell");
 		// free(tree);
 		// printf("after ....\n");
 	}
