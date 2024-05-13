@@ -6,18 +6,17 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:35:25 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/10 00:02:58 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/14 00:07:20 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 // this function handles the pwd builtin
-int	ft_pwd(t_list **env_list)
+int	ft_pwd(void)
 {
-	t_list	*tmp;
+	char	tmp[300];
 
-	tmp = find_env(env_list, "PWD");
-	printf("%s\n", tmp->value);
+	printf("%s\n", getcwd(tmp, 299));
 	return (0);
 }

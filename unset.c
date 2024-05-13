@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:32:16 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 21:40:53 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:17:58 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static int	is_valid_var(char *str)
 {
 	int	i;
 
-	i = 1;
-	if (str[0] == '=')
-		return (0);
-	while (i < ft_strlen(str) && str[i] != '=')
+	i = 0;
+	// if (str[0] == '=')
+	// 	return (0);
+	while (i < ft_strlen(str))
 	{
 		if (str[i] != '_' && !(str[i] <= '9' && str[i] >= '0') && \
 			!(str[i] <= 'Z' && str[i] >= 'A') && \
@@ -48,12 +48,13 @@ int	ft_unset(t_list **env, char **str)
 
 	i = 1;
 	ret = 0;
-	if (str)
+	if (str[i])
 	{
 		while (str[i])
 		{
+			printf("this is the arg for unset: ++%s++\n", str[i]);
 			if (is_valid_var(str[i]))
-				del_env(env, *str);
+				del_env(env, str[i]);
 			else
 				ret = handle_unset_error(str[i]);
 			i++;

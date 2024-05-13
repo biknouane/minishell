@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:01:57 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/10 00:19:33 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:12:40 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,6 @@ void	add_to_env(t_list **env, char *key, char *value)
 	tmp->key = key;
 	tmp->value = value;
 	ft_lstadd_back(env, tmp);
-}
-
-void	update_env(t_list **env, char *str)
-{
-	char	*key;
-	char	*value;
-	char	*dilimiter;
-	int		str_lenght;
-	t_list	*tmp;
-
-	key = NULL;
-	value = NULL;
-	dilimiter = ft_strchr(str, '=');
-	str_lenght = dilimiter - str;
-	key = ft_calloc(str_lenght + 1, sizeof(char));
-	if (!key)
-		return ;
-	ft_strncpy(key, str, str_lenght);
-	tmp = find_env(env, key);
-	if (tmp == NULL)
-		return (free(key));
-	str_lenght = ft_strlen(dilimiter +1);
-	value = ft_calloc(str_lenght + 1, sizeof(char));
-	if (!value)
-		return ;
-	ft_strcpy(value, dilimiter + 1);
-	free(tmp->value);
-	tmp->value = value;
 }
 
 int	is_word_present(char *str, char *word)

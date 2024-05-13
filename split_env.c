@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:34:42 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 05:34:55 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:36:03 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	split_env(t_list *env_list, char *str)
 	{
 		key_lenght = ft_strlen(str);
 		value_lenght = 0;
+		env_list->print_with_env = 0;
 	}
 	else
 	{

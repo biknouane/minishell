@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/13 01:11:56 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/13 22:49:56 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ void	read_input(char **env)
 	// char			**env_tab;
 
 	params = (t_param_holder *) ft_calloc(1, sizeof(t_param_holder));
+	params->files_table = (int *)ft_calloc(100, sizeof(int));
+	params->fd_table = (int *)ft_calloc(100, sizeof(int));
+	params->fd_index = 0;
 	params->exit_status = 0;
 	params->env_list = NULL;
 	params->state = NORMAL;
@@ -49,11 +52,18 @@ void	read_input(char **env)
 			continue ;
 		tmp = params->input;
 		tree = parse_cmd(params);
+		// printf("did i construct the tree?????\n");
 		if (!(params->is_error))
-			execute_cmd(tree, &(params->env_list), &(params->exit_status));
+		{
+			// printf("am i about to enter the execute_cmd function??????\n");
+			execute_cmd(tree, params);
+		}
+		printf("did i finish from the execution??????????\n");
 		params->is_error = 0;
 		free_tree(tree);
 		free(tmp);
+
+		printf("\n\n\n\n=============\n");
 		system("leaks minishell");
 	}
 }

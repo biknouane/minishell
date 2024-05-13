@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 23:53:00 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/13 23:51:52 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ typedef struct s_param_holder
 	t_state		state;
 	int			is_error;
 	int			exit_status;
+	int			*fd_table;
+	int			*files_table;
+	int			fd_index;
+	int			is_pipe;
 }				t_param_holder;
 
 char		*expand_nv_var(char *str, t_list **env_list);
@@ -126,9 +130,8 @@ void		make_env_list(t_list **env_list, char **env);
 t_list		*find_env(t_list **env_list, char *str);
 void		del_env(t_list **env, char *str);
 void		free_env(t_list	*tmp);
+void		update_env(t_list **env, char *str);
 char		**make_env_tab(t_list **env);
-
-int			ft_export(t_list **env, char **str);
 
 t_command	*construct_pipe_node(t_command *left_node, \
 						t_command *right_node);
@@ -152,18 +155,19 @@ void		expand_her_doc(char *str, t_list **env_list, int fd);
 int			her_doc(char *eof, int fd, t_list *env_list);
 
 // this is the part for the execution
-void		execute_cmd(t_command *tree, t_list **env_list, int *exit_status);
+void		execute_cmd(t_command *tree, t_param_holder *params);
 
 int			search_cmd(t_list *node, char **cmd);
-int			handle_builtin(char	*cmd, char **args, t_list **env_list);
+int			handle_builtin(char	*cmd, char **args, t_list **env_list, int *exit_status);
 
 /******** builting      *********/
 
-int	print_echo_args(char **args);
-int	ft_exit(char **str, int exit_status);
-int	ft_pwd(t_list **env_list);
-int	ft_env(t_list **env);
-int	ft_chdir(t_list **env_list, char **str);
-int	ft_unset(t_list **env, char **str);
-int	ft_export(t_list **env, char **str);
+int			print_echo_args(char **args);
+int			ft_exit(char **str, int *exit_status);
+int			ft_pwd(void);
+int			ft_env(t_list **env);
+int			ft_chdir(t_list **env_list, char **str);
+int			ft_unset(t_list **env, char **str);
+int			ft_export(t_list **env, char **str);
+
 #endif

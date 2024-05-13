@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:51:18 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 11:07:51 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/13 19:40:38 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ t_command	*parse_pipe(t_param_holder *params)
 		//print syntax error and exit(pipe at the end);
 		cmd = construct_pipe_node(cmd, parse_pipe(params));
 	}
+	// printf("did i return from the pipe node creation??????????\n");
 	return (cmd);
 }

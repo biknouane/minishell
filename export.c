@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:31:06 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 21:41:30 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:58:22 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ static void	handle_print_export(t_list **env)
 	var = *env;
 	while (var)
 	{
-		printf("declare -x %s =\"", var->key);
+		printf("declare -x %s", var->key);
 		if (var->value)
-			printf("%s", var->value);
-		printf("\"\n");
+			printf("=\"%s\"", var->value);
+		printf("\n");
 		var = var->next;
 	}
 }
@@ -57,6 +57,33 @@ static int	handle_export_error(char *str)
 	return (-1);
 }
 
+static int	is_present_in_list(t_list **env, char *str)
+{
+	t_list	*tmp;
+	char	*dilimiter;
+	char	*str_key;
+	int		key_len;
+
+	dilimiter = str;
+	tmp = *env;
+	while (dilimiter && *dilimiter != '=' && *dilimiter != '\0')
+		dilimiter++;
+	key_len = dilimiter - str;
+	str_key = ft_calloc(key_len + 1, 1);
+	ft_strncpy(str_key, str, key_len);
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, str_key))
+		{
+			free(str_key);
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	free(str_key);
+	return (0);
+}
+
 // this function handles the export builtin and coudld handle multiple args
 int	ft_export(t_list **env, char **str)
 {
@@ -66,15 +93,21 @@ int	ft_export(t_list **env, char **str)
 
 	i = 1;
 	ret = 0;
-	if (str)
+	if (str[i])
 	{
 		while (str[i])
 		{
 			if (is_valid_var(str[i]))
 			{
-				var = ft_calloc(1, sizeof(t_list));
-				split_env(var, str[i]);
-				ft_lstadd_back(env, var);
+				if (!is_present_in_list(env, str[i]))
+				{
+					printf("the env var is not present: %s\n", str[i]);
+					var = ft_calloc(1, sizeof(t_list));
+					split_env(var, str[i]);
+					ft_lstadd_back(env, var);
+				}
+				else
+					update_env(env, str[i]);
 			}
 			else
 				ret = handle_export_error(str[i]);

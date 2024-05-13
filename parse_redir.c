@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:49:59 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 14:34:06 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/13 19:41:00 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 				// printf("i am about constructing the re_out node\n");
 				cmd = construct_redir_node(cmd, file, \
 							O_RDWR | O_CREAT | O_TRUNC, 1);
+				// printf("did i construct the redir node?????\n");
 				// free(file);
 				// file = NULL;
 			}

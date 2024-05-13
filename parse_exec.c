@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:50:40 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 11:07:11 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/13 19:40:47 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ t_command	*parse_exec(t_param_holder *params)
 		if (params->is_error)
 			break ;
 	}
+	// printf("did i return from exec node creation??????\n");
 	return (ret);
 }

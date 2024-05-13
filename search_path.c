@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:36:32 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 21:50:42 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:02:31 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,13 @@ int	search_cmd(t_list *node, char **cmd)
 	char	*ptr;
 
 	ptr = *cmd;
+	if (node == NULL)
+	{
+		ft_putstr_fd("minishell: ", 1);
+		ft_putstr_fd(ptr, 1);
+		ft_putstr_fd(": No such file or directory\n", 1);
+		return (-1);
+	}
 	if (ft_strchr(ptr, '/'))
 	{
 		if (access(ptr, X_OK) == 0)
