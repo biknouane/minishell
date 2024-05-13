@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:31:06 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 04:31:52 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 21:41:30 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_export(t_list **env, char **str)
 	int		i;
 	int		ret;
 
-	i = 0;
+	i = 1;
 	ret = 0;
 	if (str)
 	{

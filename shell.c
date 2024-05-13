@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 11:12:14 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:11:56 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	read_input(char **env)
 {
 	t_param_holder	*params;
 	t_command		*tree;
+	char			*tmp;
 	// char			**env_tab;
 
 	params = (t_param_holder *) ft_calloc(1, sizeof(t_param_holder));
@@ -46,33 +47,15 @@ void	read_input(char **env)
 	{
 		if (ft_readline(&params->input))
 			continue ;
-		char *tmp = params->input;
+		tmp = params->input;
 		tree = parse_cmd(params);
-		if (params->is_error)
-		{
-			// printf("i am a bout to fee the tree\n");
-			params->is_error = 0;
-			free_tree(tree);
-			free(tmp);
-			tmp = NULL;
-			// system("leaks minishell");
-			continue ;
-		}
-		// printf("===> %s\n", );
-		// env_tab = make_env_tab(&(params->env_list));
-		// if
-		// execute_cmd(tree, env_tab, &(params->exit_status));
-		// free
-		// if (params->input)
-		// printf("before ....\n");
-		// printf("this is the size of tree %lu\n", sizeof(tree));
+		if (!(params->is_error))
+			execute_cmd(tree, &(params->env_list), &(params->exit_status));
+		params->is_error = 0;
 		free_tree(tree);
 		free(tmp);
-		// system("leaks minishell");
-		// free(tree);
-		// printf("after ....\n");
+		system("leaks minishell");
 	}
-	exit(0);
 }
 
 int	main(int ac, char **av, char **env)

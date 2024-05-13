@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:30:03 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 04:30:37 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 21:37:57 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	print_echo_args(char **args)
 	int	i;
 	int	flag;
 
-	i = 0;
+	i = 1;
 	flag = 0;
 	while (args[i] && is_new_line(args[i]))
 	{

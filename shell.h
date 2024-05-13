@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 13:23:00 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 23:53:00 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,9 +148,22 @@ int			look_ahead(t_param_holder *params, char *tokens);
 int			see_ahead(char *str, char *tokens);
 
 // this is the part for here_doc function
-char		*expand_her_doc(char *str, t_list **env_list);
+void		expand_her_doc(char *str, t_list **env_list, int fd);
 int			her_doc(char *eof, int fd, t_list *env_list);
 
 // this is the part for the execution
-void		execute_cmd(t_command *tree, char **env_tab, int *exit_status);
+void		execute_cmd(t_command *tree, t_list **env_list, int *exit_status);
+
+int			search_cmd(t_list *node, char **cmd);
+int			handle_builtin(char	*cmd, char **args, t_list **env_list);
+
+/******** builting      *********/
+
+int	print_echo_args(char **args);
+int	ft_exit(char **str, int exit_status);
+int	ft_pwd(t_list **env_list);
+int	ft_env(t_list **env);
+int	ft_chdir(t_list **env_list, char **str);
+int	ft_unset(t_list **env, char **str);
+int	ft_export(t_list **env, char **str);
 #endif

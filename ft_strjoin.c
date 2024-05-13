@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:11:04 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 05:11:23 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:43:16 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!final_str)
 		return (NULL);
 	temp_pointer = final_str;
-	while (*s1)
+	while (s1 && *s1)
 	{
 		*temp_pointer = *s1;
 		temp_pointer++;
 		s1++;
 	}
-	while (*s2)
+	while (s2 && *s2)
 	{
 		*temp_pointer = *s2;
 		temp_pointer++;

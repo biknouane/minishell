@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:36:32 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/10 00:12:54 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 21:50:42 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,15 @@ static int	search_in_folders(char **path, char **cmd, char *tmp)
 		cmd_path = ft_strjoin(path[i], tmp);
 		if (access(cmd_path, X_OK) == 0)
 		{
+			free(*cmd);
 			*cmd = cmd_path;
-			free(tmp);
 			free_table(path);
 			return (0);
 		}
-		free(path[i]);
+		free(cmd_path);
 		i++;
 	}
+	free_table(path);
 	return (-1);
 }
 
@@ -60,16 +61,25 @@ int	search_cmd(t_list *node, char **cmd)
 	char	*ptr;
 
 	ptr = *cmd;
-	if (ptr[0] == '/')
+	if (ft_strchr(ptr, '/'))
 	{
 		if (access(ptr, X_OK) == 0)
 			return (0);
+		ft_putstr_fd("minishell: ", 1);
+		ft_putstr_fd(ptr, 1);
+		ft_putstr_fd(": No such file or directory\n", 1);
 		return (-1);
 	}
 	tmp = ft_strjoin("/", ptr);
 	path = ft_split(node->value, ':');
-	search_in_folders(path, cmd, tmp);
+	if (search_in_folders(path, cmd, tmp) == -1)
+	{
+		ft_putstr_fd("minishell: ", 1);
+		ft_putstr_fd(ptr, 1);
+		ft_putstr_fd(": command not found\n", 1);
+		free(tmp);
+		return (-1);
+	}
 	free(tmp);
-	free(path);
-	return (-1);
+	return (0);
 }

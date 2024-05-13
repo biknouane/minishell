@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:49:59 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 12:21:05 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:34:06 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,27 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 				params->is_error = 1;
 				return (cmd);
 			}
-			// printf("am i here in the re_in re_out append=========??\n");
 			if (token == RE_IN)
 			{
 				// printf("i am about constructing the re_in node\n");
 				cmd = construct_redir_node(cmd, file, O_RDONLY, 0);
-				free(file);
-				file = NULL;
+				// free(file);
+				// file = NULL;
 			}
 			else if (token == RE_OUT)
 			{
+				// printf("the file name is :::: %s\n", file);
 				// printf("i am about constructing the re_out node\n");
 				cmd = construct_redir_node(cmd, file, \
 							O_RDWR | O_CREAT | O_TRUNC, 1);
-				free(file);
-				file = NULL;
+				// free(file);
+				// file = NULL;
 			}
 			else if (token == APEND)
 			{
 				// printf("i am about constructing the append node\n");
 				cmd = construct_redir_node(cmd, file, \
 							O_RDWR | O_CREAT | O_APPEND, 1);
-				free(file);
-				file = NULL;
 			}
 		}
 		else if (token == H_DOK)
@@ -93,10 +91,10 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 			eof = NULL;
 			close(fd);
 			cmd = construct_redir_node(cmd, file, O_RDONLY, 0);
-			free(file);
-			file = NULL;
+			// free(file);
+			// file = NULL;
 		}
 	}
-	// printf("ther is no redires in the input so i am out\n");
+	free(file);
 	return (cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:19:24 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 05:19:36 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:43:01 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_strlen(const char *s)
 	int	i;
 
 	i = 0;
-	while (*s)
+	while (s && *s)
 	{
 		s++;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:31:45 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 11:04:00 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:35:54 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ void	free_tree(t_command *tree)
 	{
 		// printf("do i have redir node\n");
 		redir_node = (t_redir_cmd *) tree;
+		printf("----------\n");
+		printf("::%s::\n", redir_node->file);
+		printf("::%d::\n", redir_node->fd);
+		printf("----------\n");
 		free_tree(redir_node->cmd);
-		// printf("----------\n");
-		// printf("%s\n", redir_node->file);
-		unlink(redir_node->file);
 		free(redir_node->file);
+		unlink(redir_node->file);
 		free(redir_node);
 	}
 	else if (tree->type == PIPE)

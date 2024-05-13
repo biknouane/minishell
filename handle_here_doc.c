@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 02:33:13 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 13:05:13 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 15:39:15 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ int	her_doc(char *eof, int fd, t_list *env_list)
 	{
 		line = readline("> ");
 		if (!*eof && !*line)
+		{
+			free(line);
 			break ;
-		printf("this is the return of the line in her_doc: %s---%u\n", line, (unsigned int)*line);
+		}
 		if (ft_strcmp(eof, line))
 		{
-			// printf("exiting heredoc %s\n", eof);
 			if (line)
 			{
 				free(line);
@@ -50,13 +51,10 @@ int	her_doc(char *eof, int fd, t_list *env_list)
 			break ;
 		}
 		if (single_quote_num == 0 && double_quote_num == 0)
-			line = expand_her_doc(line, &env_list);
-		ft_putendl_fd(line, fd);
-		if (line)
-		{
-			free(line);
-			line = NULL;
-		}
+			expand_her_doc(line, &env_list, fd);
+		else
+			ft_putendl_fd(line, fd);
+		free(line);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:29:56 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 11:09:33 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:01:19 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ t_token	get_token(t_param_holder *params, char **str_ret)
 		// printf("i ma at returning in the get_token\n");
 		end_token = params->input;
 		tmp = ft_substr(start_token, 0, end_token - start_token);
-		printf("++++++%s\n", tmp);
 		free(*str_ret);
 		*str_ret = NULL;
 		*str_ret = tmp;

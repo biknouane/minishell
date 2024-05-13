@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:43:57 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 11:08:51 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:32:19 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ t_command	*construct_exec_node(void)
 
 // this function is for constructing the redirections node
 t_command	*construct_redir_node(t_command *sub_node, \
-						char *file, int mode, int fd)
+						char *file_name, int mode, int fd)
 {
 	t_redir_cmd	*command;
 
+	printf("the*file_name name is :::: %s\n",file_name);
 	// printf("i am construction the redir node\n");
 	command = ft_calloc(1, sizeof(t_redir_cmd));
 	command->type = REDIR;
-	command->file = file;
+	command->file = ft_strdup(file_name);
 	command->mode = mode;
 	command->fd = fd;
 	command->cmd = sub_node;
