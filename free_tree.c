@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:31:45 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 14:35:54 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/14 12:09:58 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	free_tree(t_command *tree)
 		printf("----------\n");
 		free_tree(redir_node->cmd);
 		free(redir_node->file);
-		unlink(redir_node->file);
+		// unlink(redir_node->file);
 		free(redir_node);
 	}
 	else if (tree->type == PIPE)

@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/13 23:51:52 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:13:31 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,18 @@ typedef struct s_exec_cmd
 
 typedef struct s_redir_cmd
 {
-	t_cmd				type;
-	char				*file;
-	int					mode;
-	int					fd;
-	struct s_command	*cmd;
+	t_cmd		type;
+	char		*file;
+	int			mode;
+	int			fd;
+	t_command	*cmd;
 }				t_redir_cmd;
 
 typedef struct s_pipe_cmd
 {
-	t_cmd				type;
-	struct s_command	*left_node;
-	struct s_command	*right_node;
+	t_cmd		type;
+	t_command	*left_node;
+	t_command	*right_node;
 }				t_pipe_cmd;
 
 typedef struct s_param_holder

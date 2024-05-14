@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:49:59 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/13 19:41:00 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:20:24 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,23 @@
 // and building a node for it
 t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 {
-	t_token	token;
-	char	*file;
-	char	*eof;
-	int		fd;
+	t_token		token;
+	t_redir_cmd	*ret;
+	t_redir_cmd	*tmp;
+	t_command	*last_node;
+	char		*file;
+	char		*eof;
+	int			fd;
+	int			found_redir;
 
 	file = NULL;
 	eof = NULL;
+	ret = NULL;
+	tmp = NULL;
+	found_redir = 0;
 	while (look_ahead(params, "<>"))
 	{
+		found_redir = 1;
 		// printf("am i inside the redir parser\n");
 		token = get_token(params, 0);
 		// printf("this is the token at the parse redir %c\n", token);
@@ -50,11 +58,20 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 			{
 				// printf("the file name is :::: %s\n", file);
 				// printf("i am about constructing the re_out node\n");
-				cmd = construct_redir_node(cmd, file, \
+				last_node = construct_redir_node(cmd, file, \
 							O_RDWR | O_CREAT | O_TRUNC, 1);
-				// printf("did i construct the redir node?????\n");
-				// free(file);
-				// file = NULL;
+				if (ret == NULL)
+					ret = (t_redir_cmd *) last_node;
+				else if (ret != NULL && tmp == NULL)
+				{
+					ret->cmd = last_node;
+					tmp = (t_redir_cmd *) last_node;
+				}
+				else
+				{
+					tmp->cmd = last_node;
+					tmp = (t_redir_cmd *) last_node;
+				}
 			}
 			else if (token == APEND)
 			{
@@ -97,5 +114,7 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 		}
 	}
 	free(file);
+	if (found_redir)
+		return ((t_command *) ret);
 	return (cmd);
 }

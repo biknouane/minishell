@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:46:22 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/13 23:57:24 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:49:55 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,60 @@ static int	is_builting(char *cmd)
 		return (1);
 	return (0);
 }
+
+void	handle_redirections(t_param_holder *params)
+{
+	int	i;
+
+	i = 0;
+	while (i < params->fd_index)
+	{
+		// printf("i closed this fd: %d and opend this fd: %d\n", params->fd_table[i], params->files_table[i]);
+		dup2(params->files_table[i], params->fd_table[i]);
+		i++;
+	}
+}
+void	close_open_fds(t_param_holder *params)
+{
+	int	i;
+
+	i = 0;
+	while (i < params->fd_index)
+	{
+		// dup2(params->files_table[i], params->fd_table[i]);
+		close(params->files_table[i]);
+		i++;
+	}
+}
+
 // this function is for executing the command
 static void	execute_exec_node(t_command *tree, t_param_holder *params)
 {
 	t_exec_cmd	*exec_cmd;
 	int			ret;
 	int			pid;
+	int			fd_in;
+	int			fd_out;
 
 	exec_cmd = (t_exec_cmd *) tree;
 	if (exec_cmd->argv[0] == 0)
 		return ;
-	if (is_builting(exec_cmd->argv[0]))
+	if (is_builting(exec_cmd->argv[0]) && params->fd_index != 0)
 	{
-		ret = handle_builtin(exec_cmd->argv[0], exec_cmd->argv, &(params->env_list), params->exit_status);
+		fd_in = dup(0);
+		fd_out = dup(1);
+		handle_redirections(params);
+		ret = handle_builtin(exec_cmd->argv[0], exec_cmd->argv, &(params->env_list), &(params->exit_status));
+		dup2(fd_in, 0);
+		dup2(fd_out, 1);
+		close_open_fds(params);
+		close(fd_in);
+		close(fd_out);
 		return ;
+	}
+	else if (is_builting(exec_cmd->argv[0]) && params->fd_index == 0)
+	{
+		ret = handle_builtin(exec_cmd->argv[0], exec_cmd->argv, &(params->env_list), &(params->exit_status));
 	}
 	if (search_cmd(find_env(&(params->env_list), "PATH"), &(exec_cmd->argv[0])) == -1)
 	{
@@ -60,7 +100,7 @@ static void	execute_exec_node(t_command *tree, t_param_holder *params)
 			perror("minishell");
 			exit (126);
 		}
-		wait(params->exit_status);
+		wait(&(params->exit_status));
 	}
 	else
 	{
@@ -79,15 +119,17 @@ static void	execute_redir_node(t_command *tree, t_param_holder *params)
 
 	redir_cmd = (t_redir_cmd *) tree;
 	params->fd_table[params->fd_index] = redir_cmd->fd;
-	open_fd = open(redir_cmd->file, redir_cmd->mode);
+	printf("this is the file that i am about to open:=====%s=======\n", redir_cmd->file);
+	open_fd = open(redir_cmd->file, redir_cmd->mode, 0644);
 	params->files_table[params->fd_index] = open_fd;
-	printf("this is the file of this process: %s\n", redir_cmd->file);
+	(params->fd_index)++;
 	if (open_fd < 0)
 	{
 		// print_error
 	}
-	printf("this is the file we closed: %d and this is the one we opend in his place: %s\n", redir_cmd->fd, redir_cmd->file);
+	printf("this is the f/ile we closed: %d and this is the one we opend in his place: %s\n", redir_cmd->fd, redir_cmd->file);
 	execute_cmd(redir_cmd->cmd, params);
+	return ;
 }
 
 // this function is for handling the execution of pipes
@@ -115,8 +157,8 @@ static void	execute_pipe_node(t_command *tree, t_param_holder *params, int *p)
 		close(p[1]);
 		execute_cmd(pipe_cmd->right_node, params);
 	}
-	wait(params->exit_status);
-	wait(params->exit_status);
+	wait(&(params->exit_status));
+	wait(&(params->exit_status));
 	close(p[0]);
 	close(p[1]);
 }
@@ -137,7 +179,6 @@ void	execute_cmd(t_command *tree, t_param_holder *params)
 	}
 	else if (tree->type == REDIR)
 	{
-		printf("did i enterd the exute_cmd for redir?????\n");
 		execute_redir_node(tree, params);
 	}
 	else if (tree->type == PIPE)
