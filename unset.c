@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:32:16 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/13 11:17:58 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:51:17 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	ft_unset(t_list **env, char **str)
 	{
 		while (str[i])
 		{
-			printf("this is the arg for unset: ++%s++\n", str[i]);
 			if (is_valid_var(str[i]))
 				del_env(env, str[i]);
 			else

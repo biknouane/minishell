@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/14 15:04:25 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:32:50 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ft_readline(char **input)
 	*input = readline("minishell: ==> ");
 	if (!*input)
 	{
-		printf("exit\n");
 		exit(1);
 	}
 	if (ft_strcmp(*input, "") || ft_str_is_space(*input))
@@ -35,7 +34,6 @@ void	read_input(char **env)
 	t_param_holder	*params;
 	t_command		*tree;
 	char			*tmp;
-	// char			**env_tab;
 
 	params = (t_param_holder *) ft_calloc(1, sizeof(t_param_holder));
 	params->files_table = (int *)ft_calloc(100, sizeof(int));
@@ -52,19 +50,15 @@ void	read_input(char **env)
 			continue ;
 		tmp = params->input;
 		tree = parse_cmd(params);
-		// printf("did i construct the tree?????\n");
 		if (!(params->is_error))
 		{
-			// printf("am i about to enter the execute_cmd function??????\n");
 			execute_cmd(tree, params);
 		}
-		printf("did i finish from the execution??????????\n");
 		params->is_error = 0;
+		params->is_pipe = 0;
 		free_tree(tree);
 		free(tmp);
-
-		printf("\n\n\n\n=============\n");
-		// system("leaks minishell");
+		system("leaks minishell");
 	}
 }
 

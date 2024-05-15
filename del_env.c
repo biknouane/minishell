@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:27:53 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/13 11:16:01 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:48:49 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	del_env(t_list **env, char *str)
 
 	tmp = *env;
 	prev = NULL;
-	printf("this is the var that we wanna dele: %s\n", str);
 	if (!is_there_env(env, str))
 		return ;
 	if (tmp != NULL && ft_strcmp(tmp->key, str))

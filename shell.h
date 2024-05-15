@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/14 17:13:31 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:26:18 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_param_holder
 	int			*files_table;
 	int			fd_index;
 	int			is_pipe;
+	int			read_in;
 }				t_param_holder;
 
 char		*expand_nv_var(char *str, t_list **env_list);

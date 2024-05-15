@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:31:06 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/13 15:58:22 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:50:08 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int	ft_export(t_list **env, char **str)
 			{
 				if (!is_present_in_list(env, str[i]))
 				{
-					printf("the env var is not present: %s\n", str[i]);
 					var = ft_calloc(1, sizeof(t_list));
 					split_env(var, str[i]);
 					ft_lstadd_back(env, var);

@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:50:40 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/14 19:02:52 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:43:57 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_command	*parse_exec(t_param_holder *params)
 		exec_cmd->argv[arg_count] = arg;
 		arg_count++;
 		arg = NULL;
-		printf("here we goooooo +++++++++++++++\n");
 		tmp = parse_redir((t_command *)exec_cmd, params);
 		if (ret == NULL && tmp->type != EXEC)
 		{
@@ -71,17 +70,15 @@ t_command	*parse_exec(t_param_holder *params)
 		}
 		else if (ret != NULL && tmp->type != EXEC)
 		{
-			printf("============second time retunting redirs\n");
 			last_node->cmd = tmp;
 			while (last_node->cmd->type != EXEC)
 				last_node = (t_redir_cmd *)(last_node->cmd);
 		}
-		else if (ret == NULL && tmp->type == EXEC)
-		{
-			ret = tmp;
-		}
 		if (params->is_error)
 			break ;
 	}
-	return (ret);
+	if (ret)
+		return (ret);
+	else
+		return (tmp);
 }
