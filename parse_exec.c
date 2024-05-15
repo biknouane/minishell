@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:50:40 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/14 22:43:57 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/15 22:50:08 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ t_command	*parse_exec(t_param_holder *params)
 			free(arg);
 			break ;
 		}
+		char *ex = expand(arg, &(params->env_list));
+		printf("expanded: :%s\n", ex);
 		if (strip_string_quotes(arg, NULL, NULL) % 2)
 		{
 			print_error("syntax error you need to close the quotes");

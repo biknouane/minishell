@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/15 16:26:18 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/15 22:51:13 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,4 +171,9 @@ int			ft_chdir(t_list **env_list, char **str);
 int			ft_unset(t_list **env, char **str);
 int			ft_export(t_list **env, char **str);
 
+
+
+/*************        */
+int get_key_length(char *str);
+char	*expand(char *str, t_list **env_list);
 #endif

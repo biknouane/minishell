@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:36:32 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/15 20:36:07 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:09:32 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	search_cmd(t_list *node, char **cmd)
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(ptr, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
+		exit(1);
 		return (-1);
 	}
 	if (ft_strchr(ptr, '/'))
@@ -75,6 +76,7 @@ int	search_cmd(t_list *node, char **cmd)
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(ptr, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
+		exit(1);
 		return (-1);
 	}
 	tmp = ft_strjoin("/", ptr);
@@ -85,6 +87,7 @@ int	search_cmd(t_list *node, char **cmd)
 		ft_putstr_fd(ptr, 2);
 		ft_putstr_fd(": command not found\n", 2);
 		free(tmp);
+		exit(127);
 		return (-1);
 	}
 	free(tmp);
