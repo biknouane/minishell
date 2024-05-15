@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:46:22 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/15 17:27:27 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:40:18 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,22 @@ static void	execute_exec_node(t_command *tree, t_param_holder *params)
 	}
 	else if (is_builting(exec_cmd->argv[0]) && params->fd_index == 0)
 	{
-		// you should handle if you came from pipe on not
+		printf(" we are at the builtins handler without redirs and this is the cmd: ==%s==\n", exec_cmd->argv[0]);
+		// you should handle if you came from pipe or not
 		ret = handle_builtin(exec_cmd->argv[0], exec_cmd->argv, &(params->env_list), &(params->exit_status));
 		return ;
 	}
+
+	
 	// this is the normal commands
-	if (search_cmd(find_env(&(params->env_list), "PATH"), &(exec_cmd->argv[0])) == -1)
-	{
-		// set exit status to 127;
-		return ;
-	}
+	
 	if (!params->is_pipe)
 	{
 		pid = fork();
 		if (pid == 0)
 		{
+			if (search_cmd(find_env(&(params->env_list), "PATH"), &(exec_cmd->argv[0])) == -1)
+				exit(127) ;
 			if (params->fd_index == 0)
 				execve(exec_cmd->argv[0], exec_cmd->argv, make_env_tab(&(params->env_list)));
 			else if (params->fd_index)
@@ -105,9 +106,8 @@ static void	execute_exec_node(t_command *tree, t_param_holder *params)
 				fd_out = dup(1);
 				handle_redirections(params);
 				execve(exec_cmd->argv[0], exec_cmd->argv, make_env_tab(&(params->env_list)));
-				exit (126);
 			}
-			perror("minishell");
+			perror("minishell: execve:");
 			exit (126);
 		}
 		if (params->fd_index)
@@ -119,6 +119,8 @@ static void	execute_exec_node(t_command *tree, t_param_holder *params)
 	}
 	else
 	{
+		if (search_cmd(find_env(&(params->env_list), "PATH"), &(exec_cmd->argv[0])) == -1)
+			exit(127) ;
 		if (params->fd_index == 0)
 		{
 			execve(exec_cmd->argv[0], exec_cmd->argv, make_env_tab(&(params->env_list)));
@@ -147,9 +149,9 @@ static void	execute_redir_node(t_command *tree, t_param_holder *params)
 	open_fd = open(redir_cmd->file, redir_cmd->mode, 0644);
 	if (open_fd < 0)
 	{
-		ft_putstr_fd("minishell: ", 1);
-		ft_putstr_fd(redir_cmd->file, 1);
-		ft_putstr_fd(": No such file or directory\n", 1);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(redir_cmd->file, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		return ;
 	}
 	params->files_table[params->fd_index] = open_fd;
@@ -168,7 +170,7 @@ static void	execute_pipe_node(t_command *tree, t_param_holder *params, int *p, i
 	pipe_cmd = (t_pipe_cmd *) tree;
 	if (pipe(p) < 0)
 	{
-		printf("error with the pipe");
+		ft_putstr_fd("error with the pipe\n", 2);
 		exit(-1);
 	}
 	pid[0] = fork();
@@ -192,7 +194,10 @@ static void	execute_pipe_node(t_command *tree, t_param_holder *params, int *p, i
 	waitpid(pid[0], 0, 0);
 	waitpid(pid[1], 0, 0);
 	if (!*root)
+	{
+		// ft_putstr_fd("this is the chiled process exeting\n", 2);
 		exit(0);
+	}
 }
 
 // this function is to handle the execution of commands

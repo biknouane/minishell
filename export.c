@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:31:06 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/14 22:50:08 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:35:41 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,10 @@ int	ft_export(t_list **env, char **str)
 					ft_lstadd_back(env, var);
 				}
 				else
+				{
+					
 					update_env(env, str[i]);
+				}
 			}
 			else
 				ret = handle_export_error(str[i]);
