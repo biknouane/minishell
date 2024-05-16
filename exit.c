@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:28:41 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/13 15:05:04 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 14:51:43 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,18 @@ static int	check_is_number(char *str)
 }
 
 //this function handles the exit builtin
-int	ft_exit(char **args, int *exit_status)
+int	ft_exit(char **args)
 {
 	if (args[0] != '\0' && args[1] != '\0')
 	{
-		printf("minishell: exit: too many arguments\n");
-		*exit_status = 1;
-		return (-1);
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		return (1);
 	}
 	else if (args[0] && check_is_number(args[0]) == 0)
 	{
-		printf("minishell: exit: %s: numeric argument required\n", args[0]);
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(args[0], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
 		exit (-1);
 	}
 	else if (args[0] != '\0' && args[1] == '\0')

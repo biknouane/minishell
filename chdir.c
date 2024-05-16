@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:34:49 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/13 16:13:15 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 14:49:11 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ int	ft_chdir(t_list **env_list, char **str)
 		new = find_env(env_list, "HOME");
 		if (new == NULL)
 		{
-			ft_putstr_fd("minishell: cd: HOME not set", 1);
-			// set exit status to 1
-			return (-1);
+			ft_putstr_fd("minishell: cd: HOME not set", 2);
+			return (1);
 		}
 		tmp = ft_strdup(new->value);
 	}
@@ -35,11 +34,11 @@ int	ft_chdir(t_list **env_list, char **str)
 		tmp = ft_strdup(str[1]);
 	if (chdir(tmp))
 	{
-		ft_putstr_fd("Minishell: ", 1);
-		ft_putstr_fd(tmp, 1);
-		perror(" ");
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(tmp, 2);
+		ft_putstr_fd(": chdir failed\n", 2);
 		free(tmp);
-		return (-1);
+		return (1);
 	}
 	new = find_env(env_list, "PWD");
 	old = find_env(env_list, "OLDPWD");

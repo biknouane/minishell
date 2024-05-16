@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 13:42:39 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 14:59:49 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,12 @@ void	read_input(char **env)
 		tmp = params->input;
 		tree = parse_cmd(params);
 		if (!(params->is_error))
-		{
 			execute_cmd(tree, params);
-		}
 		params->is_error = 0;
 		params->is_pipe = 0;
 		free_tree(tree);
 		free(tmp);
-		system("leaks minishell");
+		// system("leaks minishell");
 	}
 }
 

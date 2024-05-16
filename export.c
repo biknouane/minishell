@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:31:06 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 13:09:12 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 14:47:26 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ static void	handle_print_export(t_list **env)
 // exprot function if the str is not valid
 static int	handle_export_error(char *str)
 {
-	printf("minishell: export: \'%s\': not a valid identifier\n", \
-						str);
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
 	return (1);
 }
 

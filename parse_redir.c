@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:49:59 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/14 22:43:31 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:58:06 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 		}
 		else if (token == H_DOK)
 		{
-			file = ft_strdup("/Users/mbiknoua/goinfre/B_HER_KNOU");
+			file = ft_strdup("/tmp/B_HER_KNOU");
 			if (get_token(params, &eof) != WORD)
 			{
 				print_error("syntax error eof missing");

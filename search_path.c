@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:36:32 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/15 21:09:32 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:04:18 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	search_in_folders(char **path, char **cmd, char *tmp)
 }
 
 // this function is for searching for the command is path variable
-int	search_cmd(t_list *node, char **cmd)
+void	search_cmd(t_list *node, char **cmd)
 {
 	char	**path;
 	char	*tmp;
@@ -67,17 +67,15 @@ int	search_cmd(t_list *node, char **cmd)
 		ft_putstr_fd(ptr, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
 		exit(1);
-		return (-1);
 	}
 	if (ft_strchr(ptr, '/'))
 	{
 		if (access(ptr, X_OK) == 0)
-			return (0);
+			return ;
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(ptr, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
 		exit(1);
-		return (-1);
 	}
 	tmp = ft_strjoin("/", ptr);
 	path = ft_split(node->value, ':');
@@ -88,8 +86,6 @@ int	search_cmd(t_list *node, char **cmd)
 		ft_putstr_fd(": command not found\n", 2);
 		free(tmp);
 		exit(127);
-		return (-1);
 	}
 	free(tmp);
-	return (0);
 }

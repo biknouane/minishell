@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:32:16 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 13:11:01 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 14:48:03 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ static int	is_valid_var(char *str)
 // this function handles the error if the args is not valid
 static int	handle_unset_error(char *str)
 {
-	printf("minishell: unset: \'%s\': not a valid identifier\n", \
-						str);
+	ft_putstr_fd("minishell: unset: `", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
 	return (1);
 }
 

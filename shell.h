@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 13:36:37 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 15:11:57 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,13 +160,13 @@ int			her_doc(char *eof, int fd, t_list *env_list);
 // this is the part for the execution
 void		execute_cmd(t_command *tree, t_param_holder *params);
 
-int			search_cmd(t_list *node, char **cmd);
-int			handle_builtin(char	*cmd, char **args, t_list **env_list, int *exit_status);
+void		search_cmd(t_list *node, char **cmd);
+int			handle_builtin(char	*cmd, char **args, t_list **env_list);
 
 /******** builting      *********/
 
 int			print_echo_args(char **args);
-int			ft_exit(char **str, int *exit_status);
+int			ft_exit(char **str);
 int			ft_pwd(void);
 int			ft_env(t_list **env);
 int			ft_chdir(t_list **env_list, char **str);
