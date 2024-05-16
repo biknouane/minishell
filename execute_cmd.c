@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:46:22 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 16:19:09 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 22:07:20 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,22 @@ static void	execute_exec_node(t_command *tree, t_param_holder *params)
 	int			pid;
 	int			fd_in;
 	int			fd_out;
+	int			i;
 
 	exec_cmd = (t_exec_cmd *) tree;
 	if (exec_cmd->argv[0] == 0)
+	{
+		i = 0;
+		if (params->fd_index)
+		{
+			while (i < params->fd_index)
+			{
+				close(params->files_table[i]);
+				i++;
+			}
+		}
 		return ;
+	}
 	if (params->is_pipe)
 	{
 		if (is_builting(exec_cmd->argv[0]))
@@ -130,6 +142,8 @@ static void	execute_exec_node(t_command *tree, t_param_holder *params)
 			pid = fork();
 			if (pid == 0)
 			{
+				signal(SIGQUIT, SIG_DFL);
+				signal(SIGINT, SIG_DFL);
 				search_cmd(find_env(&(params->env_list), "PATH"), &(exec_cmd->argv[0]));
 				if (params->fd_index)
 				{
@@ -150,7 +164,9 @@ static void	execute_exec_node(t_command *tree, t_param_holder *params)
 				close_open_fds(params);
 				params->fd_index = 0;
 			}
+			forcked = 1;
 			wait(&(params->exit_status));
+			forcked = 0;
 			update_exit_status(&(params->exit_status));
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:49:59 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 16:58:06 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:54:14 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 				return (cmd);
 			}
 			fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0640);
-			if (her_doc(eof, fd, params->env_list))
+			if (her_doc(eof, fd, params))
 			{
 				params->is_error = 1;
 				unlink(file);

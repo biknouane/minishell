@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 15:11:57 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 22:00:25 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include "readline/readline.h"
 # include "get_next_line/get_next_line.h"
 # include "readline/history.h"
+
+int	forcked;
 
 // this struct is tmp struct to hold some values 
 // for the strip_string_quotes function
@@ -152,10 +154,11 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params);
 t_command	*parse_cmd(t_param_holder *params);
 int			look_ahead(t_param_holder *params, char *tokens);
 int			see_ahead(char *str, char *tokens);
+void	update_exit_status(int *exit_status);
 
 // this is the part for here_doc function
 void		expand_her_doc(char *str, t_list **env_list, int fd);
-int			her_doc(char *eof, int fd, t_list *env_list);
+int			her_doc(char *eof, int fd, t_param_holder *params);
 
 // this is the part for the execution
 void		execute_cmd(t_command *tree, t_param_holder *params);

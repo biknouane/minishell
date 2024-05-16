@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 14:59:49 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 21:59:27 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,26 @@ void	read_input(char **env)
 	}
 }
 
+void	sig_handl(int sig)
+{
+	(void)sig;
+	if (forcked != 1)
+	{
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else
+		printf("\n");
+}
+
 int	main(int ac, char **av, char **env)
 {
 	(void)av;
+	forcked = 0;
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sig_handl);
 	if (ac != 1 || *env == NULL)
 		return (1);
 	read_input(env);

@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:51:18 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 12:31:24 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 17:13:51 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,6 @@ t_command	*parse_pipe(t_param_holder *params)
 	cmd = parse_exec(params);
 	if (params->is_error)
 		return (cmd);
-	// if (cmd->type == EXEC)
-	// {
-	// 	tmp = (t_exec_cmd *) cmd;
-	// 	if (tmp->argv[0] == NULL)
-	// 	{
-	// 		print_error("syntax error: you cant begain with a pipe");
-	// 		params->is_error = 1;
-	// 		return (cmd);
-	// 	}
-	// }
 	if (look_ahead(params, "|"))
 	{
 		if (cmd->type == EXEC)
@@ -49,11 +39,13 @@ t_command	*parse_pipe(t_param_holder *params)
 		if (*(params->input) == 0)
 		{
 			print_error("syntax error: you can't have a pipe at the end");
+			params->is_error = 1;
 			return (cmd);
 		}
 		else if (see_ahead(params->input, "|"))
 		{
 			print_error("syntax error: you can't have two pipes");
+			params->is_error = 1;
 			return (cmd);
 		}
 		// check if there is no string and 

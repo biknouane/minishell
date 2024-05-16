@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:30:03 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 21:37:57 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 22:04:51 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	print_echo_args(char **args)
 	while (args[i])
 	{
 		printf("%s", args[i]);
+		if (args[i + 1])
+			printf(" ");
 		i++;
 	}
 	return (flag);
