@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/15 18:25:51 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:42:39 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	read_input(char **env)
 		params->is_pipe = 0;
 		free_tree(tree);
 		free(tmp);
-		// system("leaks minishell");
+		system("leaks minishell");
 	}
 }
 

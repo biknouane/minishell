@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:36:20 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/13 15:18:50 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:04:43 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,16 @@ int	handle_builtin(char	*cmd, char **args, t_list **env_list, int *exit_status)
 			printf("\n");
 	}
 	else if (ft_strcmp(cmd, "export"))
-	{
-		ft_export(env_list, args);
-	}
+		return (ft_export(env_list, args));
 	else if (ft_strcmp(cmd, "unset"))
-	{
-		ft_unset(env_list, args);
-	}
+		return (ft_unset(env_list, args));
 	else if (ft_strcmp(cmd, "cd"))
-	{
-		ft_chdir(env_list, args);
-	}
+		return (ft_chdir(env_list, args));
 	else if (ft_strcmp(cmd, "pwd"))
-	{
-		ft_pwd();
-	}
+		return (ft_pwd());
 	else if (ft_strcmp(cmd, "exit"))
-		ft_exit(&args[1], exit_status);
+		return (ft_exit(&args[1], exit_status));
 	else if (ft_strcmp(cmd, "env"))
-		ft_env(env_list);
+		return (ft_env(env_list));
 	return (0);
 }

@@ -55,7 +55,7 @@ int get_key_length(char *str)
 	while (str[i])
 	{
 		if (str[i] == '\n' || str[i] == '\'' || str[i] == '"' || \
-			str[i] == ' ' || str[i] == '\0' || str[i] == '$')
+			str[i] == ' ' || str[i] == '\0' || str[i] == '$' || str[i] == '?')
 			return (i);
 		++i;
 	}

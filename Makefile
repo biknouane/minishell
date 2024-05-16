@@ -6,12 +6,12 @@
 #    By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 19:55:55 by mbiknoua          #+#    #+#              #
-#    Updated: 2024/05/16 00:11:19 by mbiknoua         ###   ########.fr        #
+#    Updated: 2024/05/16 13:36:57 by mbiknoua         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= minishell
-FLAGS= -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS= -Wall -Wextra -Werror -g #-fsanitize=address
 
 
 SCRC= chdir.c construct_tree_nodes.c del_env.c echo.c env.c execute_cmd.c \
@@ -21,7 +21,7 @@ ft_strcmp.c ft_strcpy.c ft_strdup.c ft_strjoin.c ft_strlen.c ft_strncmp.c ft_str
 ft_substr.c get_token.c handle_here_doc.c look_ahead.c make_env_list.c make_env_tab.c \
 parse_cmd.c parse_exec.c parse_pipe.c parse_redir.c print_error.c pwd.c search_path.c \
 shell.c split_env.c str_is_space.c strip_string_quotes.c unset.c see_ahead.c builtin_handler.c \
-update_env.c expand.c
+update_env.c expand.c ft_putnbr_fd.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
 
 OBJ= $(SCRC:.c=.o)

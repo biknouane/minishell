@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:31:06 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 00:02:51 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:09:12 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	handle_export_error(char *str)
 {
 	printf("minishell: export: \'%s\': not a valid identifier\n", \
 						str);
-	return (-1);
+	return (1);
 }
 
 static int	is_present_in_list(t_list **env, char *str)
@@ -92,32 +92,25 @@ int	ft_export(t_list **env, char **str)
 	int		i;
 	int		ret;
 
-	i = 1;
+	i = 0;
 	ret = 0;
-	if (str[i])
+	if (!str[1])
+		return (handle_print_export(env), 0);
+	while (str[++i])
 	{
-		while (str[i])
+		if (is_valid_var(str[i]))
 		{
-			if (is_valid_var(str[i]))
+			if (!is_present_in_list(env, str[i]))
 			{
-				if (!is_present_in_list(env, str[i]))
-				{
-					var = ft_calloc(1, sizeof(t_list));
-					split_env(var, str[i]);
-					ft_lstadd_back(env, var);
-				}
-				else
-				{
-					
-					update_env(env, str[i]);
-				}
+				var = ft_calloc(1, sizeof(t_list));
+				split_env(var, str[i]);
+				ft_lstadd_back(env, var);
 			}
 			else
-				ret = handle_export_error(str[i]);
-			i++;
+				update_env(env, str[i]);
 		}
+		else
+			ret = handle_export_error(str[i]);
 	}
-	else
-		handle_print_export(env);
 	return (ret);
 }

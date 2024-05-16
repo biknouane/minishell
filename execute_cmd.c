@@ -6,11 +6,22 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:46:22 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/15 22:00:59 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:17:18 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+void	update_exit_status(int *exit_status)
+{
+	unsigned char	*sts;
+
+	sts = (unsigned char *)exit_status;
+	if (sts[0])
+		*exit_status = sts[0] + 128;
+	else
+		*exit_status = sts[1];
+}
 
 static int	is_builting(char *cmd)
 {
@@ -42,6 +53,7 @@ void	handle_redirections(t_param_holder *params)
 		i++;
 	}
 }
+
 void	close_open_fds(t_param_holder *params)
 {
 	int	i;
@@ -82,13 +94,10 @@ static void	execute_exec_node(t_command *tree, t_param_holder *params)
 	}
 	else if (is_builting(exec_cmd->argv[0]) && params->fd_index == 0)
 	{
-		printf(" we are at the builtins handler without redirs and this is the cmd: ==%s==\n", exec_cmd->argv[0]);
 		// you should handle if you came from pipe or not
-		ret = handle_builtin(exec_cmd->argv[0], exec_cmd->argv, &(params->env_list), &(params->exit_status));
+		params->exit_status = handle_builtin(exec_cmd->argv[0], exec_cmd->argv, &(params->env_list), &(params->exit_status));
 		return ;
 	}
-
-	
 	// this is the normal commands
 	
 	if (!params->is_pipe)
@@ -115,9 +124,12 @@ static void	execute_exec_node(t_command *tree, t_param_holder *params)
 			params->fd_index = 0;
 		}
 		wait(&(params->exit_status));
+		update_exit_status(&(params->exit_status));
 	}
 	else
 	{
+		if (is_builting(exec_cmd->argv[0]))
+			exit (handle_builtin(exec_cmd->argv[0], exec_cmd->argv, &(params->env_list), &(params->exit_status)));
 		search_cmd(find_env(&(params->env_list), "PATH"), &(exec_cmd->argv[0]));
 		if (params->fd_index == 0)
 		{
@@ -157,7 +169,6 @@ static void	execute_redir_node(t_command *tree, t_param_holder *params)
 	execute_cmd(redir_cmd->cmd, params);
 	return ;
 }
-
 // this function is for handling the execution of pipes
 static void	execute_pipe_node(t_command *tree, t_param_holder *params, int *p, int *root)
 {
@@ -192,11 +203,8 @@ static void	execute_pipe_node(t_command *tree, t_param_holder *params, int *p, i
 	waitpid(pid[0], &(params->exit_status), 0);
 	waitpid(pid[1], &(params->exit_status), 0);
 	if (!*root)
-	{
-		// unsigned char *sts = (unsigned char *)&params->exit_status;
-		printf("exit :: %d\n", ((params->exit_status) >> 8));
 		exit(params->exit_status);
-	}
+	update_exit_status(&(params->exit_status));
 }
 
 // this function is to handle the execution of commands

@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_env.c                                         :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/07 05:26:47 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 11:42:50 by mbiknoua         ###   ########.fr       */
+/*   Created: 2024/05/16 12:43:37 by mbiknoua          #+#    #+#             */
+/*   Updated: 2024/05/16 12:43:49 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_list	*find_env(t_list **env_list, char *str)
+void	ft_putnbr_fd(int n, int fd)
 {
-	t_list	*env_var;
-	int		i;
-
-	env_var = *env_list;
-	i = 0;
-	while (env_var)
+	if (n == -2147483648)
 	{
-		if (ft_strcmp(str, env_var->key))
-			return (env_var);
-		env_var = env_var->next;
+		write(fd, "-2147483648", 11);
+		return ;
 	}
-	return (NULL);
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		n = -n;
+	}
+	if (n >= 0 && n <= 9)
+		ft_putchar_fd((n + '0'), fd);
+	if (n >= 10)
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putnbr_fd(n % 10, fd);
+	}
 }

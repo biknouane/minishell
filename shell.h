@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/15 22:51:13 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:36:37 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include "readline/readline.h"
+# include "get_next_line/get_next_line.h"
 # include "readline/history.h"
 
 // this struct is tmp struct to hold some values 
@@ -106,6 +107,7 @@ typedef struct s_param_holder
 	int			read_in;
 }				t_param_holder;
 
+void		ft_putnbr_fd(int n, int fd);
 char		*expand_nv_var(char *str, t_list **env_list);
 int			strip_string_quotes(char *str, int *single_q_n, int *double_q_n);
 void		parse_string(t_param_holder *params);
@@ -175,5 +177,5 @@ int			ft_export(t_list **env, char **str);
 
 /*************        */
 int get_key_length(char *str);
-char	*expand(char *str, t_list **env_list);
+char	*expand(char *str, t_param_holder *params);
 #endif
