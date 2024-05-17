@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:28:41 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 14:51:43 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:08:44 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	check_is_number(char *str)
 	i = 0;
 	if (str[0] == '\0')
 		return (-1);
-	if (str[i] != '+' && str[i] != '-')
+	if (str[i] == '+' || str[i] == '-')
 		++i;
 	while (str[i])
 	{

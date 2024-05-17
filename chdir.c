@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:34:49 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 14:49:11 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:01:04 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_chdir(t_list **env_list, char **str)
 	{
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(tmp, 2);
-		ft_putstr_fd(": chdir failed\n", 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		free(tmp);
 		return (1);
 	}

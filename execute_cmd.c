@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:46:22 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 22:07:20 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:40:03 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ static void	execute_exec_node(t_command *tree, t_param_holder *params)
 				search_cmd(find_env(&(params->env_list), "PATH"), &(exec_cmd->argv[0]));
 				if (params->fd_index)
 				{
+					printf("this is the exit status: %d\n", params->exit_status);
 					fd_in = dup(0);
 					fd_out = dup(1);
 					handle_redirections(params);

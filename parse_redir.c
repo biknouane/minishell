@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:49:59 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 12:17:07 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 12:44:48 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 		{
 			if (get_token(params, &file) != WORD)
 			{
-				print_error("syntax error file name missing");
+				print_error("syntax error near unexpected token `newline`");
 				free(file);
 				file = NULL;
 				params->is_error = 1;
+				params->exit_status = 258;
 				return (cmd);
 			}
 			if (strip_string_quotes(file, NULL, NULL) % 2)
@@ -110,12 +111,13 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 			file = ft_strdup("/tmp/B_HER_KNOU");
 			if (get_token(params, &eof) != WORD)
 			{
-				print_error("syntax error eof missing");
+				print_error("syntax error near unexpected token `newline`");
 				params->is_error = 1;
 				free(eof);
 				eof = NULL;
 				free(file);
 				file = NULL;
+				params->exit_status = 258;
 				return (cmd);
 			}
 			fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0640);
