@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 20:49:41 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:32:34 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include "get_next_line/get_next_line.h"
 # include "readline/history.h"
 
-int	forcked;
+int	killed_in_parsing;
 
 // this struct is tmp struct to hold some values 
 // for the strip_string_quotes function
@@ -110,6 +110,7 @@ typedef struct s_param_holder
 	int			read_in;
 }				t_param_holder;
 
+void		sig_handl(int sig);
 void		ft_putnbr_fd(int n, int fd);
 char		*expand_nv_var(char *str, t_list **env_list);
 int			strip_string_quotes(char *str, int *single_q_n, int *double_q_n);

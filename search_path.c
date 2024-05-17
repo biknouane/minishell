@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:36:32 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 20:06:24 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:00:20 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static void	see_if_dir_or_file(char *ptr)
 // this function is for searching for the command is path variable
 void	search_cmd(t_list *node, char **cmd)
 {
-	char	**path;
 	char	*tmp;
 	char	*ptr;
 
@@ -89,9 +88,10 @@ void	search_cmd(t_list *node, char **cmd)
 	}
 	if (ft_strchr(ptr, '/'))
 		see_if_dir_or_file(ptr);
+	if ((ptr[0] == '.' && ptr[1] == '/') || (ptr[0] == '/'))
+		return ;
 	tmp = ft_strjoin("/", ptr);
-	path = ft_split(node->value, ':');
-	if (search_in_folders(path, cmd, tmp) == -1)
+	if (search_in_folders(ft_split(node->value, ':'), cmd, tmp) == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(ptr, 2);

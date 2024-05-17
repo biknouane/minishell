@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:52:03 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 18:55:34 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:32:01 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	handle_normal(t_param_holder *params, int *fd_in, \
 	search_cmd(find_env(&(params->env_list), "PATH"), &(exec_cmd->argv[0]));
 	if (params->fd_index)
 	{
-		printf("this is the exit status: %d\n", params->exit_status);
 		*fd_in = dup(0);
 		*fd_out = dup(1);
 		handle_redirections(params);
@@ -40,7 +39,7 @@ void	handle_normal_in_no_pipe(t_param_holder *params, int *fd_in, \
 					int *fd_out, t_exec_cmd *exec_cmd)
 {
 	int	pid;
-
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
 		handle_normal(params, fd_in, fd_out, exec_cmd);
@@ -49,8 +48,7 @@ void	handle_normal_in_no_pipe(t_param_holder *params, int *fd_in, \
 		close_open_fds(params);
 		params->fd_index = 0;
 	}
-	forcked = 1;
 	wait(&(params->exit_status));
-	forcked = 0;
+	signal(SIGINT, sig_handl);
 	update_exit_status(&(params->exit_status));
 }

@@ -6,7 +6,7 @@
 #    By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 19:55:55 by mbiknoua          #+#    #+#              #
-#    Updated: 2024/05/17 20:49:27 by mbiknoua         ###   ########.fr        #
+#    Updated: 2024/05/17 22:33:05 by mbiknoua         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ all: $(NAME)
 
 
 $(NAME): $(OBJ)
-	@cc $(FLAGS) $^  -L $(READLINE_LIB) -lreadline -o $@  
+	@cc $(FLAGS) $^ -o $@  -L $(READLINE_LIB) -lreadline -o $@  
 
 %.o: %.c $(HEADER)
 	@cc $(FLAGS) -c $< -o $@  -I $(READLINE_HEADER)

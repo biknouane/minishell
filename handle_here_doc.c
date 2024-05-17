@@ -6,13 +6,18 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 02:33:13 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 20:53:33 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:44:47 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-
+void	sig_init_here(int sig)
+{
+	(void)sig;
+	printf("\n");
+	exit(1);
+}
 
 /// @brief this function is to handle reading from 
 //         stdin and puting the input in a file
@@ -34,10 +39,11 @@ int	her_doc(char *eof, int fd, t_param_holder *params)
 		print_error("syntax error you need to close quotes");
 		return (-1);
 	}
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, sig_init_here);
 		while (1)
 		{
 			line = readline("> ");
@@ -63,9 +69,9 @@ int	her_doc(char *eof, int fd, t_param_holder *params)
 		}
 		exit(0);
 	}
-	forcked = 1;
 	waitpid(pid, &(params->exit_status), 0);
-	forcked = 0;
+	signal(SIGINT, sig_handl);
 	update_exit_status(&(params->exit_status));
+	params->is_error = params->exit_status;
 	return (0);
 }

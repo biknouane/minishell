@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:03:52 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 18:15:29 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:30:28 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	wait_for_process(int *p, int *pid, int *root, \
 	close(p[1]);
 	waitpid(pid[0], &(params->exit_status), 0);
 	waitpid(pid[1], &(params->exit_status), 0);
+	signal(SIGINT, sig_handl);
 	update_exit_status(&(params->exit_status));
 	if (!*root)
 		exit(params->exit_status);
@@ -42,9 +43,11 @@ void	execute_pipe_node(t_command *tree, t_param_holder *params, \
 
 	check_pipe_failure(p);
 	pipe_cmd = (t_pipe_cmd *) tree;
+	signal(SIGINT, SIG_IGN);
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		dup2(p[1], 1);
 		close(p[0]);
 		close(p[1]);
@@ -53,6 +56,7 @@ void	execute_pipe_node(t_command *tree, t_param_holder *params, \
 	pid[1] = fork();
 	if (pid[1] == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		dup2(p[0], 0);
 		close(p[0]);
 		close(p[1]);
