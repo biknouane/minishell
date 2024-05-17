@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 22:16:26 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 13:44:49 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:33:56 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,46 +65,6 @@ int	handle_double_quote(char *str, int fd, t_param_holder *params)
 	++i;
 	ft_putchar_fd('"', fd);
 	return (i);
-}
-
-char	*ft_strrchr(const char *s, int c)
-{
-	int	len;
-
-	len = ft_strlen(s);
-	while (len >= 0)
-	{
-		if (s[len] == (char) c)
-			return ((char *)(s + len));
-		len--;
-	}
-	return (0);
-}
-
-char	*ft_strtrim(char const *s1, char const *set)
-{
-	char	*start_of_str;
-	char	*end_of_str;
-	int		len;
-
-	if (!*set)
-		return (ft_strdup(s1));
-	if (!*s1)
-		return (ft_strdup(""));
-	len = ft_strlen(s1);
-	start_of_str = (char *)s1;
-	end_of_str = (char *)s1 + ft_strlen(s1);
-	while (*start_of_str && ft_strchr(set, (int) *start_of_str))
-		start_of_str++;
-	while (len && ft_strrchr(set, (int) *end_of_str))
-	{
-		end_of_str--;
-		len--;
-	}
-	if (start_of_str > end_of_str)
-		return (ft_strdup(""));
-	return (ft_substr(s1, (start_of_str - s1) \
-	, (int)(end_of_str - start_of_str) + 1));
 }
 
 char	*get_expanded(int fd)

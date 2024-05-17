@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 23:36:32 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 19:01:21 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:06:24 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,25 @@ static int	search_in_folders(char **path, char **cmd, char *tmp)
 	return (-1);
 }
 
+static void	see_if_dir_or_file(char *ptr)
+{
+	if (is_directory(ptr))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(ptr, 2);
+		ft_putstr_fd(": is a directory\n", 2);
+		exit(126);
+	}
+	if (access(ptr, X_OK) == 0)
+		return ;
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(ptr, 2);
+	perror(" ");
+	if (access(ptr, X_OK) < 0)
+		exit (126);
+	exit(1);
+}
+
 // this function is for searching for the command is path variable
 void	search_cmd(t_list *node, char **cmd)
 {
@@ -69,23 +88,7 @@ void	search_cmd(t_list *node, char **cmd)
 		exit(1);
 	}
 	if (ft_strchr(ptr, '/'))
-	{
-		if (is_directory(ptr))
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(ptr, 2);
-			ft_putstr_fd(": is a directory\n", 2);
-			exit(126);
-		}
-		if (access(ptr, X_OK) == 0)
-			return ;
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(ptr, 2);
-		perror(" ");
-		if (access(ptr, X_OK) < 0)
-			exit (126);
-		exit(1);
-	}
+		see_if_dir_or_file(ptr);
 	tmp = ft_strjoin("/", ptr);
 	path = ft_split(node->value, ':');
 	if (search_in_folders(path, cmd, tmp) == -1)

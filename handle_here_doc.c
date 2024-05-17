@@ -6,11 +6,13 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 02:33:13 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 19:07:24 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:53:33 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+
 
 /// @brief this function is to handle reading from 
 //         stdin and puting the input in a file

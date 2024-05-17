@@ -6,11 +6,28 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:51:18 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 12:38:44 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:15:43 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+static t_command	*handle_pipe_errors(t_param_holder *params, t_command *cmd)
+{
+	if (*(params->input) == 0)
+	{
+		print_error("syntax error near unexpected token `|`");
+		params->is_error = 1;
+		params->exit_status = 258;
+	}
+	else if (see_ahead(params->input, "|"))
+	{
+		print_error("syntax error near unexpected token `|`");
+		params->is_error = 1;
+		params->exit_status = 258;
+	}
+	return (cmd);
+}
 
 /// @brief this function is the part of parsing a pipe
 /// and building a node for it
@@ -37,22 +54,7 @@ t_command	*parse_pipe(t_param_holder *params)
 			}
 		}
 		get_token(params, 0);
-		if (*(params->input) == 0)
-		{
-			print_error("syntax error near unexpected token `|`");
-			params->is_error = 1;
-			params->exit_status = 258;
-			return (cmd);
-		}
-		else if (see_ahead(params->input, "|"))
-		{
-			print_error("syntax error near unexpected token `|`");
-			params->is_error = 1;
-			params->exit_status = 258;
-			return (cmd);
-		}
-		// check if there is no string and 
-		//print syntax error and exit(pipe at the end);
+		handle_pipe_errors(params, cmd);
 		cmd = construct_pipe_node(cmd, parse_pipe(params));
 	}
 	return (cmd);

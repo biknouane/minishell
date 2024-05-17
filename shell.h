@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 18:52:45 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:49:41 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ void		parse_string(t_param_holder *params);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		**ft_split(char const *s, char c);
 int			ft_atoi(char *str);
+char		*ft_strrchr(const char *s, int c);
+char		*ft_strtrim(char const *s1, char const *set);
 int			ft_str_is_space(char *line);
 char		*ft_strchr(const char *s, int c);
 int			ft_strlen(const char *s);
@@ -148,6 +150,7 @@ t_command	*construct_redir_node(t_command *sub_node, \
 						char	*file, int mode, int fd);
 t_command	*construct_exec_node(void);
 t_token		get_token(t_param_holder *params, char **str_ret);
+void		set_ret_token(t_token *ret, t_param_holder *params);
 int			print_error(char *error);
 void		free_tree(t_command *tree);
 

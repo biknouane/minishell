@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:29:56 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 18:58:07 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:23:19 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,50 +23,6 @@ static void	initialise_state(t_param_holder *params, char tmp)
 		params->state = NORMAL;
 }
 
-// this function is to set the return token to a redirection or word
-static void	handle_redirs(t_token *ret, t_param_holder *params)
-{
-	if (*(params->input) == '>')
-	{
-		*ret = RE_OUT;
-		(params->input)++;
-		if (*(params->input) == '>')
-		{
-			*ret = APEND;
-			(params->input)++;
-		}
-	}
-	else if (*(params->input) == '<')
-	{
-		*ret = RE_IN;
-		(params->input)++;
-		if (*(params->input) == '<')
-		{
-			*ret = H_DOK;
-			(params->input)++;
-		}
-	}
-	else
-	{
-		*ret = WORD;
-		parse_string(params);
-	}
-}
-
-// this function is for setting the return token to a pipe or null
-static void	set_ret_token(t_token *ret, t_param_holder *params)
-{
-	if (*(params->input) == 0)
-		*ret = *(params->input);
-	else if (*(params->input) == '|')
-	{
-		*ret = PIP;
-		(params->input)++;
-	}
-	else
-		handle_redirs(ret, params);
-}
-
 // this function is tho escape the leading space
 static void	escape_leading_space(t_param_holder *params)
 {
@@ -76,6 +32,13 @@ static void	escape_leading_space(t_param_holder *params)
 				ft_strchr("\t\r\n\v ", *(params->input)))
 			(params->input)++;
 	}
+}
+
+static void	escape_tailing_spaces(t_param_holder *params)
+{
+	while ((params->input) < params->end_str && \
+		ft_strchr("\t\r\n\v ", *(params->input)))
+		(params->input)++;
 }
 
 // this function is the tokenizer and get us the next token
@@ -103,8 +66,6 @@ t_token	get_token(t_param_holder *params, char **str_ret)
 		*str_ret = NULL;
 		*str_ret = tmp;
 	}
-	while ((params->input) < params->end_str && \
-		ft_strchr("\t\r\n\v ", *(params->input)))
-		(params->input)++;
+	escape_tailing_spaces(params);
 	return (ret);
 }

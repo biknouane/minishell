@@ -6,33 +6,37 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:31:45 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/14 22:48:30 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:40:28 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	free_tree(t_command *tree)
+static void	free_exec_node(t_command *tree)
 {
 	t_exec_cmd	*exec_node;
+	int			i;
+
+	i = 0;
+	exec_node = (t_exec_cmd *) tree;
+	while ((exec_node->argv)[i])
+	{
+		free((exec_node->argv)[i]);
+		i++;
+	}
+	free(exec_node->argv);
+	free(exec_node);
+}
+
+void	free_tree(t_command *tree)
+{
 	t_redir_cmd	*redir_node;
 	t_pipe_cmd	*pipe_node;
-	int			i;
 
 	if (tree == NULL)
 		return ;
 	if (tree->type == EXEC)
-	{
-		i = 0;
-		exec_node = (t_exec_cmd *) tree;
-		while ((exec_node->argv)[i])
-		{
-			free((exec_node->argv)[i]);
-			i++;
-		}
-		free(exec_node->argv);
-		free(exec_node);
-	}
+		free_exec_node(tree);
 	else if (tree->type == REDIR)
 	{
 		redir_node = (t_redir_cmd *) tree;
