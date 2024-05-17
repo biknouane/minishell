@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:49:59 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 18:54:14 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 12:17:07 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 	char		*eof;
 	int			fd;
 	int			found_redir;
+	int			quote_num;
 
 	file = NULL;
 	eof = NULL;
 	ret = NULL;
 	tmp = NULL;
 	found_redir = 0;
+	quote_num = 0;
 	while (look_ahead(params, "<>"))
 	{
 		found_redir = 1;
@@ -39,6 +41,14 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 			if (get_token(params, &file) != WORD)
 			{
 				print_error("syntax error file name missing");
+				free(file);
+				file = NULL;
+				params->is_error = 1;
+				return (cmd);
+			}
+			if (strip_string_quotes(file, NULL, NULL) % 2)
+			{
+				print_error("minishell: syntax error you need to close quotes");
 				free(file);
 				file = NULL;
 				params->is_error = 1;

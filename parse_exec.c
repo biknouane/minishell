@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:50:40 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 13:24:21 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:53:42 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ t_command	*parse_exec(t_param_holder *params)
 		arg_count++;
 		arg = NULL;
 		tmp = parse_redir((t_command *)exec_cmd, params);
+		if (params->is_error)
+			return (tmp);
 		if (ret == NULL && tmp->type != EXEC)
 		{
 			ret = tmp;
