@@ -6,13 +6,14 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 15:22:42 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:17:43 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
 
+#include <sys/stat.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <signal.h>
@@ -181,4 +182,5 @@ int			ft_export(t_list **env, char **str);
 /*************        */
 int get_key_length(char *str);
 char	*expand(char *str, t_param_holder *params);
+int	is_directory(char *path);
 #endif

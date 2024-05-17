@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:46:22 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 15:40:03 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:23:45 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,15 @@ static void	execute_exec_node(t_command *tree, t_param_holder *params)
 	}
 }
 
+int	is_directory(char *path)
+{
+	struct stat info;
+
+	if (stat(path, &info) != 0)
+		return 0;
+	return S_ISDIR(info.st_mode);
+}
+
 // this function is for handling the redirections
 static void	execute_redir_node(t_command *tree, t_param_holder *params)
 {
@@ -186,14 +195,21 @@ static void	execute_redir_node(t_command *tree, t_param_holder *params)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(redir_cmd->file, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		if (is_directory(redir_cmd->file))
+		{
+			ft_putstr_fd(": is a directory\n", 2);
+			params->exit_status = 126;
+		}
+		else
+			perror(" ");
 		params->exit_status = 1;
+		if (params->is_pipe)
+			exit(params->exit_status);
 		return ;
 	}
 	params->files_table[params->fd_index] = open_fd;
 	(params->fd_index)++;
 	execute_cmd(redir_cmd->cmd, params);
-	return ;
 }
 // this function is for handling the execution of pipes
 static void	execute_pipe_node(t_command *tree, t_param_holder *params, int *p, int *root)
