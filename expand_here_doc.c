@@ -12,44 +12,15 @@
 
 #include "shell.h"
 
-// static void	find_dollar(char **str)
-// {
-// 	char	*ptr;
-
-// 	ptr = *str;
-// 	while (*ptr != '\0' && *ptr != '$')
-// 		ptr++;
-// 	*str = ptr;
-// }
-
-// static void	find_here_dilem(char **tmp)
-// {
-// 	char	*end;
-
-// 	end = *tmp;
-// 	while (*end != '\n' && *end != '\'' && *end != '"' && \
-// 				*end != ' ' && *end != '\0')
-// 		end++;
-// 	*tmp = end;
-// }
-
-// static void	replace_var(t_list *node, char **tmp, char *end, char hold)
-// {
-// 	if (node)
-// 		*tmp = ft_strjoin(*tmp, node->value);
-// 	*end = hold;
-// 	*tmp = ft_strjoin(*tmp, end);
-// }
-
 /// @brief this function handles the expand inside the her_doc body
 /// @param str the line that inputed in the here doc
 /// @param env_list environment variables for expansion
 /// @return the original string that inputed or 
 ///         expanded one if there is an expansion
 
-int get_key_length(char *str)
+int	get_key_length(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

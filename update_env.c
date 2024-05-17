@@ -6,11 +6,20 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:03:59 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/15 19:08:16 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 17:15:31 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+static void	update_var(char	**value, t_list *tmp, char *dilimiter, char *key)
+{
+	ft_strcpy(*value, dilimiter + 1);
+	free(tmp->value);
+	tmp->value = *value;
+	tmp->print_with_env = 1;
+	free(key);
+}
 
 /// @brief this function updates the environment variables list
 /// @param env the environment variables lis
@@ -26,7 +35,6 @@ void	update_env(t_list **env, char *str)
 	key = NULL;
 	value = NULL;
 	dilimiter = ft_strchr(str, '=');
-	printf("am i inside the first if in the ft_export, key= %s\n", dilimiter);
 	if (dilimiter)
 	{
 		str_lenght = dilimiter - str;
@@ -41,10 +49,6 @@ void	update_env(t_list **env, char *str)
 		value = ft_calloc(str_lenght + 1, sizeof(char));
 		if (!value)
 			return ;
-		ft_strcpy(value, dilimiter + 1);
-		free(tmp->value);
-		tmp->value = value;
-		tmp->print_with_env = 1;
-		free(key);
+		update_var(&value, tmp, dilimiter, key);
 	}
 }

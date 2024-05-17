@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 16:17:43 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:52:45 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,9 @@ t_list		*find_env(t_list **env_list, char *str);
 void		del_env(t_list **env, char *str);
 void		free_env(t_list	*tmp);
 void		update_env(t_list **env, char *str);
+void		update_exit_status(int *exit_status);
+int			is_builting(char *cmd);
+int			is_directory(char *path);
 char		**make_env_tab(t_list **env);
 
 t_command	*construct_pipe_node(t_command *left_node, \
@@ -155,7 +158,7 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params);
 t_command	*parse_cmd(t_param_holder *params);
 int			look_ahead(t_param_holder *params, char *tokens);
 int			see_ahead(char *str, char *tokens);
-void	update_exit_status(int *exit_status);
+void		update_exit_status(int *exit_status);
 
 // this is the part for here_doc function
 void		expand_her_doc(char *str, t_list **env_list, int fd);
@@ -163,9 +166,17 @@ int			her_doc(char *eof, int fd, t_param_holder *params);
 
 // this is the part for the execution
 void		execute_cmd(t_command *tree, t_param_holder *params);
+void		execute_redir_node(t_command *tree, t_param_holder *params);
+void		execute_exec_node(t_command *tree, t_param_holder *params);
+void		execute_pipe_node(t_command *tree, t_param_holder *params, \
+								int *p, int *root);
+void		handle_normal_in_no_pipe(t_param_holder *params, int *fd_in, \
+					int *fd_out, t_exec_cmd *exec_cmd);
 
 void		search_cmd(t_list *node, char **cmd);
 int			handle_builtin(char	*cmd, char **args, t_list **env_list);
+void		handle_redirections(t_param_holder *params);
+void		close_open_fds(t_param_holder *params);
 
 /******** builting      *********/
 
@@ -180,7 +191,6 @@ int			ft_export(t_list **env, char **str);
 
 
 /*************        */
-int get_key_length(char *str);
-char	*expand(char *str, t_param_holder *params);
-int	is_directory(char *path);
+int			get_key_length(char *str);
+char		*expand(char *str, t_param_holder *params);
 #endif

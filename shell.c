@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 21:59:27 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:29:22 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	read_input(char **env)
 	params->exit_status = 0;
 	params->env_list = NULL;
 	params->state = NORMAL;
-	tree = NULL;
 	make_env_list(&(params->env_list), env);
 	while (1)
 	{

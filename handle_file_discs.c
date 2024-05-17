@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   handle_file_discs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/16 12:43:37 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 18:57:41 by mbiknoua         ###   ########.fr       */
+/*   Created: 2024/05/17 18:17:44 by mbiknoua          #+#    #+#             */
+/*   Updated: 2024/05/17 18:18:13 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	handle_redirections(t_param_holder *params)
 {
-	if (n == -2147483648)
+	int	i;
+
+	i = 0;
+	while (i < params->fd_index)
 	{
-		write(fd, "-2147483648", 11);
-		return ;
+		dup2(params->files_table[i], params->fd_table[i]);
+		i++;
 	}
-	if (n < 0)
+}
+
+void	close_open_fds(t_param_holder *params)
+{
+	int	i;
+
+	i = 0;
+	while (i < params->fd_index)
 	{
-		ft_putchar_fd('-', fd);
-		n = -n;
-	}
-	if (n >= 0 && n <= 9)
-		ft_putchar_fd((n + '0'), fd);
-	if (n >= 10)
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
+		close(params->files_table[i]);
+		i++;
 	}
 }

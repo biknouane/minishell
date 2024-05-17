@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   is_directory.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/16 12:43:37 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 18:57:41 by mbiknoua         ###   ########.fr       */
+/*   Created: 2024/05/17 17:57:18 by mbiknoua          #+#    #+#             */
+/*   Updated: 2024/05/17 17:58:41 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int	is_directory(char *path)
 {
-	if (n == -2147483648)
-	{
-		write(fd, "-2147483648", 11);
-		return ;
-	}
-	if (n < 0)
-	{
-		ft_putchar_fd('-', fd);
-		n = -n;
-	}
-	if (n >= 0 && n <= 9)
-		ft_putchar_fd((n + '0'), fd);
-	if (n >= 10)
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
-	}
+	struct stat	info;
+
+	if (stat(path, &info) != 0)
+		return (0);
+	return (S_ISDIR(info.st_mode));
 }
