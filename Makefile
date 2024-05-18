@@ -6,7 +6,7 @@
 #    By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 19:55:55 by mbiknoua          #+#    #+#              #
-#    Updated: 2024/05/18 23:44:13 by mbiknoua         ###   ########.fr        #
+#    Updated: 2024/05/19 00:02:31 by mbiknoua         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,4 +53,4 @@ fclean: clean
 re: fclean all
 
 
-.PHONY: all fclean clean re bonus%
+.PHONY: all fclean clean re
