@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:50:40 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 11:53:42 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 01:37:40 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_command	*parse_exec(t_param_holder *params)
 			free(arg);
 			arg = NULL;
 			params->is_error = 1;
-			return (ret);
+			return (tmp);
 		}
 		exec_cmd->argv[arg_count] = arg;
 		arg_count++;
