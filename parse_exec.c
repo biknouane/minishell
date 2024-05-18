@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:50:40 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/18 01:37:40 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:53:09 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_command	*parse_exec(t_param_holder *params)
 			print_error("syntax error you need to close the quotes");
 			free(arg);
 			arg = NULL;
+			params->exit_status = 258;
 			params->is_error = 1;
 			return (tmp);
 		}

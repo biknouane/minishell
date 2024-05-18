@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:11:04 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 14:43:16 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:08:11 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	s_two_len = ft_strlen(s2);
 	final_str = (char *)malloc(s_two_len + s_one_len + 1);
 	if (!final_str)
-		return (NULL);
+		exit(1);
 	temp_pointer = final_str;
 	while (s1 && *s1)
 	{

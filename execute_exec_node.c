@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:21:32 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 18:54:58 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 12:37:47 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,7 @@ static void	exec_node_in_pipe(t_param_holder *params, int *fd_in, \
 		search_cmd(find_env(&(params->env_list), "PATH"), \
 					&(exec_cmd->argv[0]));
 		if (params->fd_index)
-		{
-			// fd_in = dup(0);
-			// fd_out = dup(1);
 			handle_redirections(params);
-		}
 		execve(exec_cmd->argv[0], exec_cmd->argv, \
 				make_env_tab(&(params->env_list)));
 		exit (126);

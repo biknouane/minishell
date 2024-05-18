@@ -6,11 +6,19 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:00:17 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 18:00:43 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 12:44:49 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+void	add_open_file_to_files_table(t_param_holder *params, int open_fd, 
+			t_redir_cmd *redir_cmd)
+{
+	params->files_table[params->fd_index] = open_fd;
+	(params->fd_index)++;
+	execute_cmd(redir_cmd->cmd, params);
+}
 
 // this function is for handling the redirections
 void	execute_redir_node(t_command *tree, t_param_holder *params)
@@ -31,13 +39,13 @@ void	execute_redir_node(t_command *tree, t_param_holder *params)
 			params->exit_status = 126;
 		}
 		else
+		{
 			perror(" ");
-		params->exit_status = 1;
+			params->exit_status = 1;
+		}
 		if (params->is_pipe)
 			exit(params->exit_status);
 		return ;
 	}
-	params->files_table[params->fd_index] = open_fd;
-	(params->fd_index)++;
-	execute_cmd(redir_cmd->cmd, params);
+	add_open_file_to_files_table(params, open_fd, redir_cmd);
 }

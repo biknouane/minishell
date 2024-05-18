@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 18:47:20 by mbiknoua          #+#    #+#             */
-/*   Updated: 2022/11/23 18:48:02 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:09:26 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*save_to_str_holder(char *str_holder)
 	counter++;
 	new_str = (char *)malloc((my_strlen(str_holder) - counter) + 1);
 	if (!new_str)
-		return (NULL);
+		exit(1);
 	while (str_holder[counter])
 		new_str[j++] = str_holder[counter++];
 	new_str[j] = '\0';

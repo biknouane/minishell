@@ -6,19 +6,22 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:03:52 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/18 00:30:28 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:37:22 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	check_pipe_failure(int *p)
+static int	check_pipe_failure(int *p, int *root)
 {
 	if (pipe(p) < 0)
 	{
 		ft_putstr_fd("error with the pipe\n", 2);
+		if (*root)
+			return (1);
 		exit(1);
 	}
+	return (0);
 }
 
 static void	wait_for_process(int *p, int *pid, int *root, \
@@ -34,6 +37,12 @@ static void	wait_for_process(int *p, int *pid, int *root, \
 		exit(params->exit_status);
 }
 
+static void	sig_fork(int *pid)
+{
+	signal(SIGINT, SIG_IGN);
+	pid[0] = fork();
+}
+
 // this function is for handling the execution of pipes
 void	execute_pipe_node(t_command *tree, t_param_holder *params, \
 				int *p, int *root)
@@ -41,10 +50,10 @@ void	execute_pipe_node(t_command *tree, t_param_holder *params, \
 	t_pipe_cmd	*pipe_cmd;
 	int			pid[2];
 
-	check_pipe_failure(p);
+	if (check_pipe_failure(p, root))
+		return ;
 	pipe_cmd = (t_pipe_cmd *) tree;
-	signal(SIGINT, SIG_IGN);
-	pid[0] = fork();
+	sig_fork(pid);
 	if (pid[0] == 0)
 	{
 		signal(SIGINT, SIG_DFL);

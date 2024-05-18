@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:49:59 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 12:44:48 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 11:01:14 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_command	*parse_redir(t_command *cmd, t_param_holder *params)
 				free(file);
 				file = NULL;
 				params->is_error = 1;
+				params->exit_status = 258;
 				return (cmd);
 			}
 			if (token == RE_IN)

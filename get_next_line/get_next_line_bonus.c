@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 20:09:00 by mbiknoua          #+#    #+#             */
-/*   Updated: 2022/11/23 18:43:15 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:09:00 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*return_the_line(char *str_holder)
 		counter++;
 	str_to_return = (char *)malloc(counter + 1);
 	if (!str_to_return)
-		return (NULL);
+		exit(1);
 	i = 0;
 	while (str_holder[i] && counter)
 	{
@@ -70,7 +70,7 @@ char	*read_from_the_file(int fd, char *str_holder)
 
 	buffer_holder = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer_holder)
-		return (NULL);
+		exit(1);
 	while (1)
 	{
 		counter = read(fd, buffer_holder, BUFFER_SIZE);
@@ -99,7 +99,7 @@ t_file_infos	*my_lstnew_add_back(t_file_infos **lst, int fd)
 
 	node = (t_file_infos *)malloc(sizeof(t_file_infos));
 	if (!node)
-		return (NULL);
+		exit(1);
 	node->fd = fd;
 	node->str_holder = NULL;
 	node->next = NULL;

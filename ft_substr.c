@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:09:24 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/10 17:45:56 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:08:29 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	check_if_len_not_big(s, &str_len, len, start);
 	rtn_str = (char *)malloc(str_len + 1);
 	if (!rtn_str)
-		return (NULL);
+		exit (1);
 	if (start >= (unsigned int)ft_strlen(s))
 	{
 		*rtn_str = '\0';

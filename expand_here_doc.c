@@ -17,7 +17,6 @@
 /// @param env_list environment variables for expansion
 /// @return the original string that inputed or 
 ///         expanded one if there is an expansion
-
 int	get_key_length(char *str)
 {
 	int	i;

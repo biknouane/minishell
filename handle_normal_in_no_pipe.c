@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:52:03 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/18 00:32:01 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 11:31:35 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	handle_normal_in_no_pipe(t_param_holder *params, int *fd_in, \
 					int *fd_out, t_exec_cmd *exec_cmd)
 {
 	int	pid;
+
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)

@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:15:30 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/07 05:16:17 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:07:12 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	*ft_calloc(size_t count, size_t size)
 
 	p = malloc(count * size);
 	if (!p)
-		return (NULL);
+		exit (1);
 	ft_bzero(p, count * size);
 	return (p);
 }

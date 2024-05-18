@@ -6,12 +6,11 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:34:49 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/17 17:48:37 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 11:27:34 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
 
 static int	cd_to_home(char *str, t_list **new, char **tmp, t_list **env_list)
 {

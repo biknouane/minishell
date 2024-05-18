@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 04:31:06 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/16 14:47:26 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 12:27:51 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static int	is_valid_var(char *str)
 	int	i;
 
 	i = 1;
-	if (str[0] == '=' || (str[0] <= '9' && str[0] >= '0') || \
-	(!(str[0] <= 'Z' && str[0] >= 'A') && !(str[0] <= 'z' && str[0] >= 'a')))
+	if (!(str[0] <= 'Z' && str[0] >= 'A') && \
+	!(str[0] <= 'z' && str[0] >= 'a') && str[0] != '_')
 		return (0);
 	while (i < ft_strlen(str) && str[i] != '=')
 	{

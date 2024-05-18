@@ -6,14 +6,14 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/18 00:32:34 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 15:04:11 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
 
-#include <sys/stat.h>
+# include <sys/stat.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <signal.h>
@@ -23,8 +23,6 @@
 # include "readline/readline.h"
 # include "get_next_line/get_next_line.h"
 # include "readline/history.h"
-
-int	killed_in_parsing;
 
 // this struct is tmp struct to hold some values 
 // for the strip_string_quotes function
@@ -108,6 +106,8 @@ typedef struct s_param_holder
 	int			fd_index;
 	int			is_pipe;
 	int			read_in;
+	int			single_quote_num;
+	int			double_quote_num;
 }				t_param_holder;
 
 void		sig_handl(int sig);
@@ -191,8 +191,6 @@ int			ft_env(t_list **env);
 int			ft_chdir(t_list **env_list, char **str);
 int			ft_unset(t_list **env, char **str);
 int			ft_export(t_list **env, char **str);
-
-
 
 /*************        */
 int			get_key_length(char *str);

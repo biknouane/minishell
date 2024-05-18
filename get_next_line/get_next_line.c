@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 23:16:32 by mbiknoua          #+#    #+#             */
-/*   Updated: 2022/11/23 18:50:51 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:09:49 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*my_strjoin(char *s1, char *s2)
 	s_two_len = my_strlen(s2);
 	final_str = (char *)malloc(s_two_len + s_one_len + 1);
 	if (!final_str)
-		return (NULL);
+		exit(1);
 	process_final_str(s1, s2, final_str);
 	free(s1);
 	return (final_str);
@@ -66,7 +66,7 @@ char	*return_the_line(char *str_holder)
 		counter++;
 	str_to_return = (char *)malloc(counter + 1);
 	if (!str_to_return)
-		return (NULL);
+		exit(1);
 	i = 0;
 	while (str_holder[i] && counter)
 	{
@@ -85,7 +85,7 @@ char	*read_from_the_file(int fd, char *str_holder)
 
 	buffer_holder = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer_holder)
-		return (NULL);
+		exit(1);
 	while (1)
 	{
 		counter = read(fd, buffer_holder, BUFFER_SIZE);
