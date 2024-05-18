@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 02:33:13 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/18 14:51:43 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 22:37:38 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	sig_init_here(int sig)
 
 static int	check_line_if_eof(char *eof, char *line)
 {
-	if (ft_strcmp(eof, line))
+	if (ft_strncmp(eof, line, ft_strlen(line)))
 	{
 		if (line)
 		{
@@ -47,9 +47,10 @@ static void	here_doc_while(char *line, char *eof, int fd, \
 	while (1)
 	{
 		line = readline("> ");
-		if (!*eof && !*line)
+		if (!*eof || !line)
 		{
 			free(line);
+			free(eof);
 			break ;
 		}
 		if (check_line_if_eof(eof, line))
@@ -94,5 +95,5 @@ int	her_doc(char *eof, int fd, t_param_holder *params)
 		exit(0);
 	}
 	wait_for_here_process(pid, params);
-	return (0);
+	return (free(eof), 0);
 }

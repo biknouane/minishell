@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 22:16:26 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/18 01:37:46 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:40:21 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	handle_single_quote(char *str, int fd)
 		ft_putchar_fd(str[i++], fd);
 	if (str[i] == '\'')
 		ft_putchar_fd('\'', fd);
-	++i;
+	i++;
 	return (i);
 }
 
@@ -105,7 +105,7 @@ char	*expand(char *str, t_param_holder *params)
 	{
 		if (str[i] == '\'')
 			i += handle_single_quote(&str[i], fd[1]);
-		if (str[i] == '"')
+		else if (str[i] == '"')
 			i += handle_double_quote(&str[i], fd[1], params);
 		else if (str[i] == '$')
 			i += get_key_value(&str[i], fd[1], params);

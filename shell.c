@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:07 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/18 13:28:03 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 22:31:01 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,6 @@ void	sig_handl(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	// if (!forcked)
-	// {
-	// 	printf("\n");
-	// 	rl_replace_line("", 0);
-	// 	rl_on_new_line();
-	// 	rl_redisplay();
-	// }
-	// else
-	// 	printf("\n");
 }
 
 int	main(int ac, char **av, char **env)

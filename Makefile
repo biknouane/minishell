@@ -6,7 +6,7 @@
 #    By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 19:55:55 by mbiknoua          #+#    #+#              #
-#    Updated: 2024/05/17 22:33:05 by mbiknoua         ###   ########.fr        #
+#    Updated: 2024/05/18 22:30:17 by mbiknoua         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ shell.c split_env.c str_is_space.c strip_string_quotes.c unset.c see_ahead.c bui
 update_env.c expand.c ft_putnbr_fd.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 update_exit_status.c is_builting.c is_directory.c execute_redir_node.c execute_pipe_node.c \
 handle_file_discs.c execute_exec_node.c handle_normal_in_no_pipe.c set_ret_token.c ft_strrchr.c \
-ft_strtrim.c 
-
+ft_strtrim.c  exec_hadle_quotes.c parse_redire_utils.c
+ 
 
 OBJ= $(SCRC:.c=.o)
 HEADER= shell.h

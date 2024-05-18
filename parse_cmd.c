@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:52:09 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/12 16:48:39 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:42:52 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,5 @@ t_command	*parse_cmd(t_param_holder *params)
 
 	params->end_str = params->input + ft_strlen(params->input);
 	cmd = parse_pipe(params);
-	// look_ahead(params, "");
-	// if (params->input != params->end_str)
-		// the is still leftovers
-		// handle this error
 	return (cmd);
 }

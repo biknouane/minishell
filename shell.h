@@ -6,7 +6,7 @@
 /*   By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:58:27 by mbiknoua          #+#    #+#             */
-/*   Updated: 2024/05/18 15:04:11 by mbiknoua         ###   ########.fr       */
+/*   Updated: 2024/05/18 22:28:17 by mbiknoua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,13 @@ typedef struct s_param_holder
 	int			read_in;
 	int			single_quote_num;
 	int			double_quote_num;
+	t_token		token;
+	int			arg_count;
+	char		*arg;
+	t_command	*tmp;
+	t_redir_cmd	*last_node;
+	char		*eof;
+	char		*file;
 }				t_param_holder;
 
 void		sig_handl(int sig);
@@ -195,4 +202,8 @@ int			ft_export(t_list **env, char **str);
 /*************        */
 int			get_key_length(char *str);
 char		*expand(char *str, t_param_holder *params);
+int			handle_quotes_and_error(t_param_holder *params, char **arg);
+int			get_file_flags(t_token token);
+void		free_resources(char *file, char *eof);
+
 #endif
