@@ -6,12 +6,12 @@
 #    By: mbiknoua <mbiknoua@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 19:55:55 by mbiknoua          #+#    #+#              #
-#    Updated: 2024/05/18 22:30:17 by mbiknoua         ###   ########.fr        #
+#    Updated: 2024/05/18 23:44:13 by mbiknoua         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= minishell
-FLAGS= -Wall -Wextra -Werror #-g -fsanitize=address
+FLAGS= -Wall -Wextra -Werror
 
 
 SCRC= chdir.c construct_tree_nodes.c del_env.c echo.c env.c execute_cmd.c \
